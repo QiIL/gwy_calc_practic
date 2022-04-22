@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>速算练习器</title>
+</head>
+<body>
+    <div id="main" class="main">
+        <button class="main_button button_front add_practic_button" @click="goto_add_practic(2)">2位数加法速算练习</button>
+        <button class="main_button button_front add_practic_button" @click="goto_add_practic(3)">3位数加法速算练习</button>
+        <button class="main_button button_front add_practic_button" @click="goto_add_practic(4)">随机位数加法速算练习</button>
+        <button class="main_button button_front mul_practic_button" @click="goto_mul_practic(2,2)">2位数乘法速算练习</button>
+        <button class="main_button button_front mul_practic_button" @click="goto_mul_practic(3, 3)">3位数乘法速算练习</button>
+        <button class="main_button button_front mul_practic_button" @click="goto_mul_practic(3, 2)">3位数乘2位数乘法速算练习</button>
+        <button class="main_button button_front div_practic_button" @click="goto_div_practic(6, [1,2,3], 1)">除法速算练习(求首位)</button>
+        <button class="main_button button_front div_practic_button" @click="goto_div_practic(6, [1,2,3], 2)">除法速算练习(求首两位)</button>
+        <div id="practic" class="practic">
+            <div id="counter"> 用时：{{ counter }} </div>
+            <div v-for="(item, index) in items">
+                <span class="formula" :style="{width: item.formulaWidth1+'px'}">{{item.first}}</span>
+                <span class="formula">{{item.sign}}</span>
+                <span class="formula":style="{width: item.formulaWidth2+'px'}">{{item.second}}</span>
+                <span class="formula">=</span>
+                <input class="clientAnswer" v-model.lazy.number="item.clientAnswer">
+                <span class="answer" :class="{'answer_hide': judge_answer_full_hide()}" :style="{width: item.formulaWidth3+'px'}">{{item.answer}}</span>
+                <span :class="{'answer_hide': judge_correct_hide(item)}">✔</span>
+                <span :class="{'answer_hide': judge_fault_hide(item)}">✖</span>
+            </div>
+        </div>
+    </div>
+</body>
+<style>
+.main_button {
+    color: rgb(255, 255, 255);
+    border: 1px solid rgb(64, 158, 255);
+    margin: 1px 0px 0px 10px;
+    padding: 12px 23px;
+    border-radius: 20px;
+}
+.button_front {
+    font-size: 14px;
+    line-height: 1;
+    display: inline-block;
+    white-space: nowrap;
+    cursor: pointer;
+    appearance: none;
+    text-align: center;
+    outline: none;
+    transition: all 0.1s ease 0s;
+    font-weight: 500;
+    user-select: none
+} 
+
+.add_practic_button {
+    background: rgb(64, 158, 255);
+}
+
+.mul_practic_button {
+    background: rgb(64, 47, 158);
+}
+
+.div_practic_button {
+    background: rgb(43, 139, 28);
+}
+.formula {
+    font-size: 18px;
+    display: inline-block;
+    text-align: center;
+    width: 20px;
+    padding: 10px 2px;
+    border: none;
+    margin: 1px 0px 0px 10px;
+    font-weight: 400;
+}
+
+.clientAnswer {
+    width: 100px;
+    font-size: 18px;
+    display: inline-block;
+    text-align: center;
+    padding: 10px 2px;
+    margin: 1px 0px 0px 10px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid #000000;
+    font-weight: 400;
+}
+
+.answer {
+    width: 60px;
+    font-size: 18px;
+    display: inline-block;
+    text-align: center;
+    padding: 10px 2px;
+    border: none;
+    margin: 1px 0px 0px 10px;
+    font-weight: 400;
+    color: red;
+}
+
+.answer_hide {
+    display: none;
+}
+
+</style>
+<script src="https://unpkg.com/vue@next"></script>
+<script type="text/javascript">
+    const main = {
+        data() {
+            return {
+                items: [],
+                counter: 0,
+                allowAounter: false
+            }
+        },
+        mounted() {
+            setInterval(() => {
+                console.log(this.allowAounter)
+                if(this.allowAounter===true) {
+                    this.counter++
+                }
+            }, 1000)
+        },
+        methods: {
+            judge_correct_hide(obj) {
+                // console.log(obj.hasOwnProperty("clientAnswer"))
+                if (obj.hasOwnProperty("clientAnswer")) {
+                    return obj.clientAnswer !== obj.answer
+                } else {
+                    return true
+                }
+            },
+            judge_fault_hide(obj) {
+                if (obj.hasOwnProperty("clientAnswer")) {
+                    return obj.clientAnswer === obj.answer
+                } else {
+                    return true
+                }
+            },
+            judge_answer_full_hide() {
+                let clientAnswers = []
+                for (i of this.items) {
+                    if (i.hasOwnProperty("clientAnswer")) {
+                        clientAnswers.push(i.clientAnswer)
+                    }
+                }
+                let JudgeStop = clientAnswers.length !== 20
+                this.allowAounter = JudgeStop
+                return JudgeStop
+            },
+            goto_add_practic(mul) {
+                this.counter = 0
+                this.allowAounter = true
+                this.items=[]
+                console.log(this.allowAounter)
+                for (i=0; i<20; i++) {
+                    let first = Math.ceil(Math.random()*Math.pow(10, mul))
+                    let second = Math.ceil(Math.random()*Math.pow(10, mul))
+                    this.items.push({
+                        first, 
+                        sign: "➕", 
+                        second,
+                        answer: first+second,
+                        formulaWidth1: 10*mul,
+                        formulaWidth2: 10*mul,
+                        formulaWidth3: 15*mul
+                    })
+                }
+            },
+            goto_mul_practic(mul1, mul2) {
+                this.counter = 0
+                this.allowAounter = true
+                this.items=[]
+                for (i=0; i<20; i++) {
+                    let first = Math.ceil(Math.random()*Math.pow(10, mul1))
+                    let second = Math.ceil(Math.random()*Math.pow(10, mul2))
+                    this.items.push({
+                        first, 
+                        sign: "✖", 
+                        second,
+                        answer: first*second,
+                        formulaWidth1: 10*mul1,
+                        formulaWidth2: 10*mul2,
+                        formulaWidth3: 10*(mul1+mul2)
+                    })
+                }
+            },
+            goto_div_practic(mul1, randList, Sub) {
+                this.counter = 0
+                this.allowAounter = true
+                this.items=[]
+                for (i=0; i<20; i++) {
+                    let mul2 = randList[Math.floor(Math.random()*randList.length)]
+                    let first = Math.ceil(Math.random()*Math.pow(10, mul1))
+                    let second = Math.ceil(Math.random()*Math.pow(10, mul2))
+                    let answer = Number(Math.floor(first/second).toString().substring(0,Sub))
+                    this.items.push({
+                        first, 
+                        sign: "➗", 
+                        second,
+                        answer,
+                        formulaWidth1: 10*mul1,
+                        formulaWidth2: 10*mul2,
+                        formulaWidth3: 20*sub
+                    })
+                }
+            },
+        } 
+    }
+    Vue.createApp(main).mount('#main')
+</script>
+</html>
