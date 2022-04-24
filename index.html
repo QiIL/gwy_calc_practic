@@ -188,7 +188,7 @@
                     })
                 }
             },
-            goto_div_practic(mul1, randList, Sub) {
+            goto_div_practic(mul1, randList, sub) {
                 this.counter = 0
                 this.allowAounter = true
                 this.items=[]
@@ -196,7 +196,7 @@
                     let mul2 = randList[Math.floor(Math.random()*randList.length)]
                     let first = Math.ceil(Math.random()*Math.pow(10, mul1))
                     let second = Math.ceil(Math.random()*Math.pow(10, mul2))
-                    let answer = Number(Math.floor(first/second).toString().substring(0,Sub))
+                    let answer = Number(Math.floor(first/second).toString().substring(0,sub))
                     this.items.push({
                         first, 
                         sign: "➗", 
