@@ -8,14 +8,18 @@
 </head>
 <body>
     <div id="main" class="main">
-        <button class="main_button button_front add_practic_button" @click="goto_add_practic(2)">2位数加法速算练习</button>
-        <button class="main_button button_front add_practic_button" @click="goto_add_practic(3)">3位数加法速算练习</button>
-        <button class="main_button button_front add_practic_button" @click="goto_add_practic(4)">随机位数加法速算练习</button>
-        <button class="main_button button_front mul_practic_button" @click="goto_mul_practic(2,2)">2位数乘法速算练习</button>
-        <button class="main_button button_front mul_practic_button" @click="goto_mul_practic(3, 3)">3位数乘法速算练习</button>
-        <button class="main_button button_front mul_practic_button" @click="goto_mul_practic(3, 2)">3位数乘2位数乘法速算练习</button>
-        <button class="main_button button_front div_practic_button" @click="goto_div_practic(6, [1,2,3], 1)">除法速算练习(求首位)</button>
-        <button class="main_button button_front div_practic_button" @click="goto_div_practic(6, [1,2,3], 2)">除法速算练习(求首两位)</button>
+        <button class="main_button button_front add_practic_button" @click="goto_add_practic(2)">2位数加法</button>
+        <button class="main_button button_front add_practic_button" @click="goto_add_practic(3)">3位数加法</button>
+        <button class="main_button button_front add_practic_button" @click="goto_add_practic(4)">随机位数加法</button>
+        <button class="main_button button_front sub_practic_button" @click="goto_sub_practic(2)">2位数减法</button>
+        <button class="main_button button_front sub_practic_button" @click="goto_sub_practic(3)">3位数减法</button>
+        <button class="main_button button_front sub_practic_button" @click="goto_sub_practic(4)">随机位数减法</button>
+        <button class="main_button button_front mul_practic_button" @click="goto_mul_practic(2,2)">2位数乘法</button>
+        <button class="main_button button_front mul_practic_button" @click="goto_mul_practic(3, 3)">3位数乘法</button>
+        <button class="main_button button_front mul_practic_button" @click="goto_mul_practic(3, 2)">3位数乘2位数乘法</button>
+        <button class="main_button button_front div_practic_button" @click="goto_div_practic(5, [1,2,3], 1)">除法(求首位)</button>
+        <button class="main_button button_front div_practic_button" @click="goto_div_practic(5, [1,2,3], 2)">除法(求首两位)</button>
+        <button class="main_button button_front div_practic_button" @click="goto_div_practic(5, [1,2,3], 2)">除法(求前3位)</button>
         <div id="practic" class="practic">
             <div id="counter"> 用时：{{ counter }} </div>
             <div v-for="(item, index) in items">
@@ -56,6 +60,11 @@
 .add_practic_button {
     background: rgb(64, 158, 255);
 }
+
+.sub_practic_button {
+    background: rgb(255, 191, 64);
+}
+
 
 .mul_practic_button {
     background: rgb(64, 47, 158);
@@ -156,7 +165,7 @@
                 this.allowAounter = true
                 this.items=[]
                 console.log(this.allowAounter)
-                for (i=0; i<20; i++) {
+                for (i=0; i<10; i++) {
                     let first = Math.ceil(Math.random()*Math.pow(10, mul))
                     let second = Math.ceil(Math.random()*Math.pow(10, mul))
                     this.items.push({
@@ -170,11 +179,32 @@
                     })
                 }
             },
+            goto_sub_practic(mul) {
+                this.counter = 0
+                this.allowAounter = true
+                this.items=[]
+                console.log(this.allowAounter)
+                for (i=0; i<10; i++) {
+                    // 被减数可以随机减一位
+                    secondMulSub = Math.round(Math.random())
+                    let first = Math.ceil(Math.random()*Math.pow(10, mul))
+                    let second = Math.ceil(Math.random()*Math.pow(10, mul-secondMulSub))
+                    this.items.push({
+                        first, 
+                        sign: "➖", 
+                        second,
+                        answer: first-second,
+                        formulaWidth1: 10*mul,
+                        formulaWidth2: 10*mul,
+                        formulaWidth3: 10*mul
+                    })
+                }
+            },
             goto_mul_practic(mul1, mul2) {
                 this.counter = 0
                 this.allowAounter = true
                 this.items=[]
-                for (i=0; i<20; i++) {
+                for (i=0; i<10; i++) {
                     let first = Math.ceil(Math.random()*Math.pow(10, mul1))
                     let second = Math.ceil(Math.random()*Math.pow(10, mul2))
                     this.items.push({
@@ -192,7 +222,7 @@
                 this.counter = 0
                 this.allowAounter = true
                 this.items=[]
-                for (i=0; i<20; i++) {
+                for (i=0; i<10; i++) {
                     let mul2 = randList[Math.floor(Math.random()*randList.length)]
                     let first = Math.ceil(Math.random()*Math.pow(10, mul1))
                     let second = Math.ceil(Math.random()*Math.pow(10, mul2))
