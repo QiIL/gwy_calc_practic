@@ -14,9 +14,9 @@
         <button class="main_button button_front sub_practic_button" @click="goto_sub_practic(2)">2位数减法</button>
         <button class="main_button button_front sub_practic_button" @click="goto_sub_practic(3)">3位数减法</button>
         <button class="main_button button_front sub_practic_button" @click="goto_sub_practic(4)">随机位数减法</button>
-        <button class="main_button button_front mul_practic_button" @click="goto_mul_practic(2,2)">2位数乘法</button>
-        <button class="main_button button_front mul_practic_button" @click="goto_mul_practic(3, 3)">3位数乘法</button>
-        <button class="main_button button_front mul_practic_button" @click="goto_mul_practic(3, 2)">3位数乘2位数乘法</button>
+        <button class="main_button button_front mul_practic_button" @click="goto_mul_practic(2, 2, 3)">2位数乘法(求前3位)</button>
+        <button class="main_button button_front mul_practic_button" @click="goto_mul_practic(3, 3, 3)">3位数乘法(求前3位)</button>
+        <button class="main_button button_front mul_practic_button" @click="goto_mul_practic(3, 2, 3)">3位数乘2位数乘法(求前3位)</button>
         <button class="main_button button_front div_practic_button" @click="goto_div_practic(5, [1,2,3], 1)">除法(求首位)</button>
         <button class="main_button button_front div_practic_button" @click="goto_div_practic(5, [1,2,3], 2)">除法(求首两位)</button>
         <button class="main_button button_front div_practic_button" @click="goto_div_practic(5, [1,2,3], 2)">除法(求前3位)</button>
@@ -156,7 +156,10 @@
                         clientAnswers.push(i.clientAnswer)
                     }
                 }
-                let JudgeStop = clientAnswers.length !== 20
+                let JudgeStop = false 
+                if (clientAnswers.length !== 10) {
+                    JudgeStop = true
+                }
                 this.allowAounter = JudgeStop
                 return JudgeStop
             },
@@ -200,18 +203,19 @@
                     })
                 }
             },
-            goto_mul_practic(mul1, mul2) {
+            goto_mul_practic(mul1, mul2, sub) {
                 this.counter = 0
                 this.allowAounter = true
                 this.items=[]
                 for (i=0; i<10; i++) {
                     let first = Math.ceil(Math.random()*Math.pow(10, mul1))
                     let second = Math.ceil(Math.random()*Math.pow(10, mul2))
+                    let answer = Number(Math.floor(first*second).toString().substring(0,sub))
                     this.items.push({
                         first, 
                         sign: "✖", 
                         second,
-                        answer: first*second,
+                        answer,
                         formulaWidth1: 10*mul1,
                         formulaWidth2: 10*mul2,
                         formulaWidth3: 10*(mul1+mul2)
