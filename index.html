@@ -30,7 +30,7 @@
                 <span class="formula">{{item.sign}}</span>
                 <span class="formula":style="{width: item.formulaWidth2+'px'}">{{item.second}}</span>
                 <span class="formula">=</span>
-                <input class="clientAnswer" v-model.lazy.number="item.clientAnswer">
+                <input class="clientAnswer" v-model.lazy.number="item.clientAnswer" @keyup.enter="change_focus($event, index)">
                 <span class="answer" :class="{'answer_hide': judge_answer_full_hide()}" :style="{width: item.formulaWidth3+'px'}">{{item.answer}}</span>
                 <span :class="{'answer_hide': judge_correct_hide(item)}">✔</span>
                 <span :class="{'answer_hide': judge_fault_hide(item)}">✖</span>
@@ -125,7 +125,8 @@
             return {
                 items: [],
                 counter: 0,
-                allowAounter: false
+                allowAounter: false,
+                topic: 10
             }
         },
         mounted() {
@@ -137,6 +138,13 @@
             }, 1000)
         },
         methods: {
+            change_focus($event, index) {
+                if (index+1 < this.topic) {
+                    let activeInput = document.activeElement
+                    let nextInput = activeInput.nextElementSibling.parentElement.nextElementSibling.getElementsByTagName("input")[0]
+                    activeInput && nextInput.focus();
+                }
+            },
             judge_correct_hide(obj) {
                 // console.log(obj.hasOwnProperty("clientAnswer"))
                 if (obj.hasOwnProperty("clientAnswer")) {
@@ -160,7 +168,7 @@
                     }
                 }
                 let JudgeStop = false 
-                if (clientAnswers.length !== 10) {
+                if (clientAnswers.length !== this.topic) {
                     JudgeStop = true
                 }
                 this.allowAounter = JudgeStop
@@ -171,7 +179,7 @@
                 this.allowAounter = true
                 this.items=[]
                 console.log(this.allowAounter)
-                for (i=0; i<10; i++) {
+                for (i=0; i<this.topic; i++) {
                     let first = Math.ceil(Math.random()*Math.pow(10, mul))
                     let second = Math.ceil(Math.random()*Math.pow(10, mul))
                     this.items.push({
@@ -190,7 +198,7 @@
                 this.allowAounter = true
                 this.items=[]
                 console.log(this.allowAounter)
-                for (i=0; i<10; i++) {
+                for (i=0; i<this.topic; i++) {
                     // 被减数可以随机减一位
                     secondMulSub = Math.round(Math.random())
                     let first = Math.ceil(Math.random()*Math.pow(10, mul))
@@ -210,7 +218,7 @@
                 this.counter = 0
                 this.allowAounter = true
                 this.items=[]
-                for (i=0; i<10; i++) {
+                for (i=0; i<this.topic; i++) {
                     let first = Math.ceil(Math.random()*Math.pow(10, mul1))
                     let second = Math.ceil(Math.random()*Math.pow(10, mul2))
                     let answer = Number(Math.floor(first*second).toString().substring(0,sub))
@@ -229,7 +237,7 @@
                 this.counter = 0
                 this.allowAounter = true
                 this.items=[]
-                for (i=0; i<10; i++) {
+                for (i=0; i<this.topic; i++) {
                     let mul2 = randList[Math.floor(Math.random()*randList.length)]
                     let first = Math.ceil(Math.random()*Math.pow(10, mul1))
                     let second = Math.ceil(Math.random()*Math.pow(10, mul2))
