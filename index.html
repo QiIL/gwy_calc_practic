@@ -22,7 +22,7 @@
         <button class="main_button button_front mul_practic_button" @click="goto_mul_practic(3, 2, 3)">3位数乘2位数乘法(求前3位)</button>
         <button class="main_button button_front div_practic_button" @click="goto_div_practic(5, [1,2,3], 1)">除法(求首位)</button>
         <button class="main_button button_front div_practic_button" @click="goto_div_practic(5, [1,2,3], 2)">除法(求首两位)</button>
-        <button class="main_button button_front div_practic_button" @click="goto_div_practic(5, [1,2,3], 2)">除法(求前3位)</button>
+        <button class="main_button button_front div_practic_button" @click="goto_div_practic(5, [1,2,3], 3)">除法(求前3位)</button>
         <div id="practic" class="practic">
             <div id="counter"> 用时：{{ counter }} </div>
             <div v-for="(item, index) in items">
