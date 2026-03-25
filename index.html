@@ -933,7 +933,7 @@
       <section class="page-head">
         <div>
           <span class="brand-line">Mental Math / Exam Flow</span>
-          <h1>公务员速算练习器</h1>
+          <h1>速算练习器</h1>
           <p>配置、答题、总结三段流程都压进练习器主体里了，页面更紧凑，手机和桌面都更容易操作。</p>
         </div>
         <div class="page-head-stats">
@@ -953,7 +953,7 @@
           <span class="step-index">01</span>
           <div>
             <h2>配置</h2>
-            <p>选题型和考试规则</p>
+            <p>选题型和练习规则</p>
           </div>
         </article>
         <article class="view-pill" :class="{ active: currentView === 'exam' }">
@@ -976,8 +976,8 @@
         <article class="setup-card">
           <div class="card-header">
             <div>
-              <h3>考试配置</h3>
-              <p>题型和考试参数放在同一张卡里。每个类别目前只有 3 个模式，后面就算扩到 6 个，这种布局也更紧凑。</p>
+              <h3>练习配置</h3>
+              <p>题型和练习参数放在同一张卡里。每个类别目前只有 3 个模式，后面就算扩到 6 个，这种布局也更紧凑。</p>
             </div>
             <span class="pill">{{ setup.modeCategory }}</span>
           </div>
@@ -1082,7 +1082,7 @@
             </div>
           </div>
           <div class="action-row compact">
-            <button class="button primary" @click="startExam()">开始考试</button>
+            <button class="button primary" @click="startExam()">开始练习</button>
           </div>
         </div>
       </section>
@@ -1090,7 +1090,7 @@
       <section v-else-if="currentView === 'exam'" class="exam-shell">
         <aside class="exam-sidebar dark">
           <div class="sidebar-block">
-            <span class="tiny-label">考试模式</span>
+            <span class="tiny-label">练习模式</span>
             <div class="sidebar-value">{{ exam.modeName }}</div>
             <p class="sidebar-note">{{ exam.modeDescription }}</p>
           </div>
@@ -1162,7 +1162,7 @@
 
       <section v-else class="summary-layout">
         <div>
-          <h2>考试总结</h2>
+          <h2>练习总结</h2>
           <p>{{ summaryHeadline }}</p>
         </div>
 
@@ -1192,7 +1192,7 @@
         <div class="summary-grid">
           <section class="subpanel">
             <h3>错题回看</h3>
-            <p>总结页里集中看错题和未作答题，比考试过程中打断节奏更适合复盘。</p>
+            <p>总结页里集中看错题和未作答题，比练习过程中打断节奏更适合复盘。</p>
             <div v-if="summary.wrongItems.length === 0" class="empty-box">
               本轮没有错题。可以直接再来一轮，或者切换成更高难度模式。
             </div>
@@ -1211,7 +1211,7 @@
             <h3>成绩记录</h3>
             <p>最近记录会保存在浏览器本地，方便你回头看每次模式、用时和正确率。</p>
             <div v-if="history.length === 0" class="empty-box">
-              目前还没有历史记录。完成一次考试后会自动写入本地。
+              目前还没有历史记录。完成一次练习后会自动写入本地。
             </div>
             <div v-else class="history-list">
               <article v-for="item in history" :key="item.id" class="history-item">
@@ -1385,7 +1385,7 @@
         },
         currentViewLabel() {
           if (this.currentView === "setup") return "配置页";
-          if (this.currentView === "exam") return "考试页";
+          if (this.currentView === "exam") return "练习页";
           return "总结页";
         },
         answeredCount() {
@@ -1416,9 +1416,9 @@
             return "倒计时结束后已自动交卷，错题和成绩记录已经整理在下面。";
           }
           if (this.summary.finishReason === "manual") {
-            return "你提前结束了本轮考试。未作答题目也已计入总结，方便快速复盘。";
+            return "你提前结束了本轮练习。未作答题目也已计入总结，方便快速复盘。";
           }
-          return "本轮考试已正常完成，下面可以直接回看错题和最近成绩。";
+          return "本轮练习已正常完成，下面可以直接回看错题和最近成绩。";
         }
       },
       mounted() {
