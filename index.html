@@ -228,15 +228,8 @@
 
     .setup-shell {
       display: grid;
-      grid-template-columns: minmax(0, 1.25fr) 320px;
-      gap: 18px;
+      gap: 16px;
       padding-bottom: 92px;
-    }
-
-    .setup-main,
-    .setup-side {
-      display: grid;
-      gap: 12px;
     }
 
     .card-header {
@@ -298,6 +291,32 @@
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 12px;
+    }
+
+    .setup-divider {
+      margin: 14px 0 12px;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(55, 84, 130, 0.02), rgba(55, 84, 130, 0.16), rgba(55, 84, 130, 0.02));
+    }
+
+    .config-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 1fr 1fr;
+      gap: 12px;
+      align-items: start;
+    }
+
+    .config-box {
+      padding: 14px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.5);
+      border: 1px solid rgba(55, 84, 130, 0.08);
+    }
+
+    .config-box h4 {
+      margin: 0 0 10px;
+      font-size: 13px;
+      letter-spacing: 0.04em;
     }
 
     .choice-card,
@@ -390,9 +409,9 @@
 
     .setup-summary {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 12px;
-      margin-top: 2px;
+      margin-top: 4px;
     }
 
     .summary-chip {
@@ -834,6 +853,7 @@
 
     @media (max-width: 860px) {
       .category-tabs,
+      .config-grid,
       .mode-grid,
       .mini-choice-row {
         grid-template-columns: 1fr;
@@ -964,12 +984,11 @@
       </section>
 
       <section v-if="currentView === 'setup'" class="setup-shell">
-        <div class="setup-main">
         <article class="setup-card">
           <div class="card-header">
             <div>
-              <h3>考试模式</h3>
-              <p>先按类别切换，再从当前类别里选具体模式。这样屏幕里只显示同类题型，不会一口气堆满整页。</p>
+              <h3>考试配置</h3>
+              <p>题型和考试参数放在同一张卡里。每个类别目前只有 3 个模式，后面就算扩到 6 个，这种布局也更紧凑。</p>
             </div>
             <span class="pill">{{ setup.modeCategory }}</span>
           </div>
@@ -996,55 +1015,59 @@
               <span>{{ mode.description }}</span>
             </button>
           </div>
-        </article>
-        </div>
 
-        <aside class="setup-side">
-        <article class="setup-card">
-          <div class="card-header">
-            <div>
-              <h3>考试参数</h3>
-              <p>参数集中在一张卡里，开始按钮固定漂浮，不需要往下翻找。</p>
-            </div>
-            <span class="pill">Setup</span>
-          </div>
-          <div class="field">
-            <label for="topic-range">题量</label>
-            <input id="topic-range" v-model.number="setup.topicCount" type="range" min="5" max="30" step="1">
-            <div class="field-value">
-              <span>当前设置</span>
-              <strong>{{ setup.topicCount }} 题</strong>
-            </div>
+          <div class="setup-divider"></div>
+
+          <div class="config-grid">
+            <section class="config-box">
+              <h4>题量</h4>
+              <div class="field">
+                <label for="topic-range">题量</label>
+                <input id="topic-range" v-model.number="setup.topicCount" type="range" min="5" max="30" step="1">
+                <div class="field-value">
+                  <span>当前设置</span>
+                  <strong>{{ setup.topicCount }} 题</strong>
+                </div>
+              </div>
+            </section>
+
+            <section class="config-box">
+              <h4>计时方式</h4>
+              <div class="mini-choice-row">
+                <button class="mini-choice" :class="{ active: setup.timingMode === 'countup' }" @click="setup.timingMode = 'countup'">
+                  <strong>顺序计时</strong>
+                  <span>答完再结束。</span>
+                </button>
+                <button class="mini-choice" :class="{ active: setup.timingMode === 'countdown' }" @click="setup.timingMode = 'countdown'">
+                  <strong>倒计时</strong>
+                  <span>时间到自动交卷。</span>
+                </button>
+              </div>
+              <div v-if="setup.timingMode === 'countdown'" class="field">
+                <label for="countdown-range">倒计时时长</label>
+                <input id="countdown-range" v-model.number="setup.countdownMinutes" type="range" min="1" max="15" step="1">
+                <div class="field-value">
+                  <span>当前设置</span>
+                  <strong>{{ setup.countdownMinutes }} 分钟</strong>
+                </div>
+              </div>
+            </section>
+
+            <section class="config-box">
+              <h4>答案反馈</h4>
+              <div class="mini-choice-row">
+                <button class="mini-choice" :class="{ active: setup.revealPolicy === 'summary' }" @click="setup.revealPolicy = 'summary'">
+                  <strong>总结页显示</strong>
+                  <span>做完整场再统一复盘。</span>
+                </button>
+                <button class="mini-choice" :class="{ active: setup.revealPolicy === 'instant' }" @click="setup.revealPolicy = 'instant'">
+                  <strong>即时反馈</strong>
+                  <span>每题输入后立刻显示。</span>
+                </button>
+              </div>
+            </section>
           </div>
 
-          <div class="mini-choice-row">
-            <button class="mini-choice" :class="{ active: setup.timingMode === 'countup' }" @click="setup.timingMode = 'countup'">
-              <strong>顺序计时</strong>
-              <span>答完再结束，适合正常刷题。</span>
-            </button>
-            <button class="mini-choice" :class="{ active: setup.timingMode === 'countdown' }" @click="setup.timingMode = 'countdown'">
-              <strong>倒计时模式</strong>
-              <span>时间归零立刻交卷。</span>
-            </button>
-          </div>
-          <div v-if="setup.timingMode === 'countdown'" class="field">
-            <label for="countdown-range">倒计时时长</label>
-            <input id="countdown-range" v-model.number="setup.countdownMinutes" type="range" min="1" max="15" step="1">
-            <div class="field-value">
-              <span>当前设置</span>
-              <strong>{{ setup.countdownMinutes }} 分钟</strong>
-            </div>
-          </div>
-          <div class="mini-choice-row">
-            <button class="mini-choice" :class="{ active: setup.revealPolicy === 'summary' }" @click="setup.revealPolicy = 'summary'">
-              <strong>做完整场再显示答案</strong>
-              <span>总结页统一复盘。</span>
-            </button>
-            <button class="mini-choice" :class="{ active: setup.revealPolicy === 'instant' }" @click="setup.revealPolicy = 'instant'">
-              <strong>每题输入后即时反馈</strong>
-              <span>边做边看答案。</span>
-            </button>
-          </div>
           <div class="setup-summary">
             <div class="summary-chip">
               <span class="label">模式</span>
@@ -1068,7 +1091,6 @@
             <button class="button ghost" @click="applyRecommendedPreset()">应用推荐配置</button>
           </div>
         </article>
-        </aside>
 
         <div class="setup-floatbar">
           <div class="setup-floatmeta">
