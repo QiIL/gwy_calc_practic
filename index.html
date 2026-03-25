@@ -407,38 +407,6 @@
       font-size: 14px;
     }
 
-    .setup-summary {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 12px;
-      margin-top: 4px;
-    }
-
-    .summary-chip {
-      padding: 12px;
-      border-radius: var(--radius-lg);
-      background: rgba(255, 255, 255, 0.48);
-      border: 1px solid rgba(55, 84, 130, 0.08);
-    }
-
-    .summary-chip span {
-      display: block;
-    }
-
-    .summary-chip .label {
-      color: var(--muted);
-      font-size: 11px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    .summary-chip .value {
-      margin-top: 8px;
-      font-size: 18px;
-      font-weight: 700;
-      letter-spacing: -0.04em;
-    }
-
     .action-row {
       display: flex;
       flex-wrap: wrap;
@@ -497,15 +465,33 @@
     }
 
     .setup-floatmeta {
-      display: flex;
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 10px;
-      color: var(--muted);
-      font-size: 12px;
+      flex: 1;
     }
 
-    .setup-floatmeta strong {
+    .float-chip {
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.62);
+      border: 1px solid rgba(55, 84, 130, 0.08);
+    }
+
+    .float-chip .label {
+      display: block;
+      color: var(--muted);
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .float-chip strong {
+      display: block;
+      margin-top: 6px;
       color: var(--text);
+      font-size: 15px;
+      letter-spacing: -0.03em;
     }
 
     .action-row.compact {
@@ -886,7 +872,6 @@
       }
 
       .view-strip,
-      .setup-summary,
       .summary-stats {
         grid-template-columns: 1fr;
       }
@@ -907,6 +892,10 @@
         bottom: 8px;
         flex-direction: column;
         align-items: stretch;
+      }
+
+      .setup-floatmeta {
+        grid-template-columns: 1fr 1fr;
       }
 
       .action-row.compact {
@@ -1068,25 +1057,6 @@
             </section>
           </div>
 
-          <div class="setup-summary">
-            <div class="summary-chip">
-              <span class="label">模式</span>
-              <span class="value">{{ selectedMode.name }}</span>
-            </div>
-            <div class="summary-chip">
-              <span class="label">题量</span>
-              <span class="value">{{ setup.topicCount }} 题</span>
-            </div>
-            <div class="summary-chip">
-              <span class="label">计时</span>
-              <span class="value">{{ setup.timingMode === 'countup' ? '顺序计时' : '倒计时' }}</span>
-            </div>
-            <div class="summary-chip">
-              <span class="label">答案反馈</span>
-              <span class="value">{{ setup.revealPolicy === 'instant' ? '即时显示' : '总结页显示' }}</span>
-            </div>
-          </div>
-
           <div class="action-row">
             <button class="button ghost" @click="applyRecommendedPreset()">应用推荐配置</button>
           </div>
@@ -1094,10 +1064,22 @@
 
         <div class="setup-floatbar">
           <div class="setup-floatmeta">
-            <span><strong>{{ selectedMode.name }}</strong></span>
-            <span>{{ setup.topicCount }} 题</span>
-            <span>{{ setup.timingMode === 'countup' ? '顺序计时' : setup.countdownMinutes + ' 分钟倒计时' }}</span>
-            <span>{{ setup.revealPolicy === 'instant' ? '即时显示答案' : '总结页显示答案' }}</span>
+            <div class="float-chip">
+              <span class="label">模式</span>
+              <strong>{{ selectedMode.name }}</strong>
+            </div>
+            <div class="float-chip">
+              <span class="label">题量</span>
+              <strong>{{ setup.topicCount }} 题</strong>
+            </div>
+            <div class="float-chip">
+              <span class="label">计时</span>
+              <strong>{{ setup.timingMode === 'countup' ? '顺序计时' : setup.countdownMinutes + ' 分钟倒计时' }}</strong>
+            </div>
+            <div class="float-chip">
+              <span class="label">答案反馈</span>
+              <strong>{{ setup.revealPolicy === 'instant' ? '即时反馈' : '总结页显示' }}</strong>
+            </div>
           </div>
           <div class="action-row compact">
             <button class="button primary" @click="startExam()">开始考试</button>
