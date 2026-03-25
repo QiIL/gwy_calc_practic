@@ -95,16 +95,6 @@
       border-radius: var(--radius-xl);
     }
 
-    .topbar {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: center;
-      gap: 16px;
-      margin-bottom: 18px;
-      padding: 22px 26px;
-    }
-
     .brand-line {
       display: inline-flex;
       align-items: center;
@@ -118,32 +108,46 @@
       text-transform: uppercase;
     }
 
-    .topbar h1 {
+    .page-head {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 16px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(55, 84, 130, 0.08);
+    }
+
+    .page-head h1 {
       margin: 14px 0 8px;
       font-family: "Noto Serif SC", "Songti SC", serif;
-      font-size: clamp(30px, 4vw, 50px);
+      font-size: clamp(24px, 3vw, 38px);
       line-height: 1.05;
       letter-spacing: -0.05em;
     }
 
-    .topbar p {
+    .page-head p {
       margin: 0;
-      max-width: 64ch;
+      max-width: 58ch;
       color: var(--muted);
-      font-size: 14px;
-      line-height: 1.8;
+      font-size: 13px;
+      line-height: 1.7;
     }
 
-    .hero-metrics {
-      display: grid;
-      gap: 12px;
-      min-width: 260px;
+    .page-head-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: flex-end;
+      align-items: center;
     }
 
-    .metric {
-      padding: 16px 18px;
-      border-radius: var(--radius-lg);
-      background: var(--surface-strong);
+    .mini-stat {
+      min-width: 120px;
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.56);
       border: 1px solid rgba(55, 84, 130, 0.08);
     }
 
@@ -156,29 +160,32 @@
     }
 
     .metric-value {
-      margin-top: 8px;
-      font-size: 24px;
+      margin-top: 6px;
+      font-size: 18px;
       font-weight: 700;
       letter-spacing: -0.05em;
     }
 
-    .stepper {
+    .view-strip {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 12px;
-      margin-bottom: 18px;
+      gap: 10px;
+      margin-bottom: 16px;
     }
 
-    .step {
-      padding: 16px 18px;
-      border-radius: var(--radius-lg);
-      background: rgba(255, 255, 255, 0.46);
+    .view-pill {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 14px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.52);
       border: 1px solid rgba(55, 84, 130, 0.08);
-      transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+      transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
     }
 
-    .step.active {
-      transform: translateY(-2px);
+    .view-pill.active {
+      transform: translateY(-1px);
       background: linear-gradient(135deg, rgba(223, 238, 255, 0.96), rgba(248, 252, 255, 0.98));
       border-color: rgba(68, 119, 217, 0.34);
     }
@@ -187,25 +194,25 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 28px;
-      height: 28px;
+      width: 24px;
+      height: 24px;
       border-radius: 50%;
       background: rgba(27, 149, 201, 0.1);
       color: var(--secondary);
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 700;
     }
 
-    .step h2 {
-      margin: 10px 0 6px;
-      font-size: 17px;
+    .view-pill h2 {
+      margin: 0 0 2px;
+      font-size: 14px;
     }
 
-    .step p {
+    .view-pill p {
       margin: 0;
       color: var(--muted);
-      font-size: 12px;
-      line-height: 1.7;
+      font-size: 11px;
+      line-height: 1.55;
     }
 
     .page {
@@ -213,7 +220,7 @@
     }
 
     .setup-card {
-      padding: 22px;
+      padding: 18px;
       border-radius: var(--radius-xl);
       background: var(--surface-strong);
       border: 1px solid rgba(55, 84, 130, 0.08);
@@ -229,7 +236,7 @@
     .setup-main,
     .setup-side {
       display: grid;
-      gap: 16px;
+      gap: 12px;
     }
 
     .card-header {
@@ -237,19 +244,19 @@
       justify-content: space-between;
       gap: 12px;
       align-items: start;
-      margin-bottom: 16px;
+      margin-bottom: 12px;
     }
 
     .card-header h3 {
       margin: 0 0 6px;
-      font-size: 18px;
+      font-size: 16px;
     }
 
     .card-header p {
       margin: 0;
       color: var(--muted);
-      font-size: 12px;
-      line-height: 1.7;
+      font-size: 11px;
+      line-height: 1.55;
     }
 
     .pill {
@@ -267,7 +274,7 @@
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 10px;
-      margin-bottom: 14px;
+      margin-bottom: 10px;
     }
 
     .category-tab {
@@ -296,7 +303,7 @@
     .choice-card,
     .mini-choice {
       width: 100%;
-      padding: 14px;
+      padding: 12px;
       border-radius: var(--radius-lg);
       border: 1px solid rgba(55, 84, 130, 0.1);
       background: rgba(255, 255, 255, 0.54);
@@ -325,22 +332,22 @@
     .choice-card strong,
     .mini-choice strong {
       display: block;
-      font-size: 15px;
-      margin-bottom: 8px;
+      font-size: 14px;
+      margin-bottom: 6px;
     }
 
     .choice-card span,
     .mini-choice span {
       display: block;
       color: var(--muted);
-      font-size: 12px;
-      line-height: 1.7;
+      font-size: 11px;
+      line-height: 1.55;
     }
 
     .mini-choice-row {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px;
+      gap: 10px;
     }
 
     .field {
@@ -385,11 +392,11 @@
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 12px;
-      margin-top: 8px;
+      margin-top: 2px;
     }
 
     .summary-chip {
-      padding: 14px;
+      padding: 12px;
       border-radius: var(--radius-lg);
       background: rgba(255, 255, 255, 0.48);
       border: 1px solid rgba(55, 84, 130, 0.08);
@@ -417,7 +424,7 @@
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
-      margin-top: 20px;
+      margin-top: 14px;
     }
 
     .button {
@@ -485,6 +492,27 @@
     .action-row.compact {
       margin-top: 0;
       justify-content: flex-end;
+    }
+
+    .exam-submitbar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-top: 16px;
+      padding: 14px 16px;
+      border-radius: 18px;
+      background: rgba(240, 247, 255, 0.92);
+      border: 1px solid rgba(55, 84, 130, 0.08);
+      position: sticky;
+      bottom: 10px;
+    }
+
+    .exam-submit-meta {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.6;
     }
 
     .exam-shell {
@@ -837,10 +865,18 @@
         padding: 18px;
       }
 
-      .stepper,
+      .view-strip,
       .setup-summary,
       .summary-stats {
         grid-template-columns: 1fr;
+      }
+
+      .page-head {
+        padding-bottom: 12px;
+      }
+
+      .page-head-stats {
+        justify-content: flex-start;
       }
 
       .setup-floatbar {
@@ -874,48 +910,59 @@
       .question-card .judge {
         grid-column: 1 / -1;
       }
+
+      .exam-submitbar {
+        bottom: 6px;
+        padding: 12px;
+      }
     }
   </style>
 </head>
 <body>
   <div id="app" class="app-shell">
-    <header class="panel topbar">
-      <div>
-        <span class="brand-line">Mental Math / Exam Flow</span>
-        <h1>公务员速算练习器</h1>
-        <p>改成了真正的三段流程：先配置考试，再进入答题，再看总结。现在更像一套可重复练习的小型考试系统，而不是单页题目列表。</p>
-      </div>
-      <div class="hero-metrics">
-        <div class="metric">
-          <span class="metric-label">当前页面</span>
-          <div class="metric-value">{{ currentViewLabel }}</div>
-        </div>
-        <div class="metric">
-          <span class="metric-label">历史记录</span>
-          <div class="metric-value">{{ history.length }} 条</div>
-        </div>
-      </div>
-    </header>
-
-    <section class="stepper">
-      <article class="step" :class="{ active: currentView === 'setup' }">
-        <span class="step-index">01</span>
-        <h2>配置</h2>
-        <p>在首页卡片里选考试模式、题量、计时方式和显示规则。</p>
-      </article>
-      <article class="step" :class="{ active: currentView === 'exam' }">
-        <span class="step-index">02</span>
-        <h2>答题</h2>
-        <p>顺序计时和倒计时都支持，倒计时结束后会直接进入总结页。</p>
-      </article>
-      <article class="step" :class="{ active: currentView === 'summary' }">
-        <span class="step-index">03</span>
-        <h2>总结</h2>
-        <p>统计成绩、查看错题、保留最近历史记录，方便复盘。</p>
-      </article>
-    </section>
-
     <main class="panel page">
+      <section class="page-head">
+        <div>
+          <span class="brand-line">Mental Math / Exam Flow</span>
+          <h1>公务员速算练习器</h1>
+          <p>配置、答题、总结三段流程都压进练习器主体里了，页面更紧凑，手机和桌面都更容易操作。</p>
+        </div>
+        <div class="page-head-stats">
+          <div class="mini-stat">
+            <span class="metric-label">当前页面</span>
+            <div class="metric-value">{{ currentViewLabel }}</div>
+          </div>
+          <div class="mini-stat">
+            <span class="metric-label">历史记录</span>
+            <div class="metric-value">{{ history.length }} 条</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="view-strip">
+        <article class="view-pill" :class="{ active: currentView === 'setup' }">
+          <span class="step-index">01</span>
+          <div>
+            <h2>配置</h2>
+            <p>选题型和考试规则</p>
+          </div>
+        </article>
+        <article class="view-pill" :class="{ active: currentView === 'exam' }">
+          <span class="step-index">02</span>
+          <div>
+            <h2>答题</h2>
+            <p>支持顺序计时和倒计时</p>
+          </div>
+        </article>
+        <article class="view-pill" :class="{ active: currentView === 'summary' }">
+          <span class="step-index">03</span>
+          <div>
+            <h2>总结</h2>
+            <p>看错题和成绩记录</p>
+          </div>
+        </article>
+      </section>
+
       <section v-if="currentView === 'setup'" class="setup-shell">
         <div class="setup-main">
         <article class="setup-card">
@@ -957,7 +1004,7 @@
           <div class="card-header">
             <div>
               <h3>考试参数</h3>
-              <p>把题量、计时和答案反馈压缩到侧栏里，开始按钮固定在底部，不需要再往下翻整页。</p>
+              <p>参数集中在一张卡里，开始按钮固定漂浮，不需要往下翻找。</p>
             </div>
             <span class="pill">Setup</span>
           </div>
@@ -998,9 +1045,6 @@
               <span>边做边看答案。</span>
             </button>
           </div>
-        </article>
-
-        <article class="setup-card">
           <div class="setup-summary">
             <div class="summary-chip">
               <span class="label">模式</span>
@@ -1098,6 +1142,16 @@
               <span class="inline-answer" :class="{ hidden: !shouldShowInlineAnswer(item) }">{{ item.answer }}</span>
               <span class="judge" :class="judgeClass(item)">{{ judgeSymbol(item) }}</span>
             </article>
+          </div>
+
+          <div class="exam-submitbar">
+            <div class="exam-submit-meta">
+              最后一题下方可以直接交卷，不需要再滑回顶部。
+              当前已完成 {{ answeredCount }}/{{ exam.items.length }} 题。
+            </div>
+            <div class="action-row compact">
+              <button class="button primary" @click="finishExam('manual')">{{ examSubmitLabel }}</button>
+            </div>
           </div>
         </section>
       </section>
@@ -1346,6 +1400,11 @@
           if (!this.exam) return "00:00";
           const seconds = this.exam.timingMode === "countdown" ? this.exam.remainingSeconds : this.exam.elapsedSeconds;
           return this.formatDuration(seconds);
+        },
+        examSubmitLabel() {
+          if (!this.exam) return "交卷";
+          if (this.exam.timingMode === "countdown") return "提前交卷";
+          return this.answeredCount >= this.exam.items.length ? "交卷并查看总结" : "结束本轮并查看总结";
         },
         summaryHeadline() {
           if (!this.summary) return "";
