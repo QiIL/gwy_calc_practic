@@ -1,260 +1,1080 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>速算练习器</title>
-    <link rel="bookmark" href="favicon.ico" type="image/x-icon" />
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>速算练习器</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Azeret+Mono:wght@400;500;700&family=Noto+Serif+SC:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="bookmark" href="favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <style>
+    :root {
+      --bg: #f3efe6;
+      --bg-accent: #f7d9a6;
+      --surface: rgba(255, 252, 246, 0.78);
+      --surface-strong: rgba(255, 249, 241, 0.94);
+      --surface-dark: #202530;
+      --text: #2f241d;
+      --muted: #6b5f57;
+      --line: rgba(107, 95, 87, 0.18);
+      --primary: #d97745;
+      --primary-deep: #a74d21;
+      --secondary: #2c6b72;
+      --success: #237a57;
+      --danger: #cf4b4b;
+      --shadow: 0 24px 60px rgba(121, 82, 42, 0.12);
+      --radius-xl: 28px;
+      --radius-lg: 20px;
+      --radius-md: 14px;
+      --glow-x: 50%;
+      --glow-y: 20%;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      min-height: 100%;
+      margin: 0;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 10% 20%, rgba(255, 215, 158, 0.42), transparent 32%),
+        radial-gradient(circle at 90% 10%, rgba(101, 167, 174, 0.24), transparent 26%),
+        linear-gradient(180deg, #f9f4ec 0%, #f3efe6 40%, #efe7dc 100%);
+      font-family: "Azeret Mono", "SFMono-Regular", "Menlo", "Monaco", "Consolas", monospace;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle 240px at var(--glow-x) var(--glow-y), rgba(255, 173, 92, 0.18), transparent 70%);
+      transition: background-position 0.16s ease-out;
+      z-index: 0;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.22;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.35) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.35) 1px, transparent 1px);
+      background-size: 36px 36px;
+      mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.55), transparent 88%);
+      z-index: 0;
+    }
+
+    .app-shell {
+      position: relative;
+      z-index: 1;
+      width: min(1180px, calc(100% - 32px));
+      margin: 28px auto 56px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.3fr 0.9fr;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    .panel {
+      border: 1px solid rgba(255, 255, 255, 0.45);
+      background: var(--surface);
+      backdrop-filter: blur(18px);
+      box-shadow: var(--shadow);
+      border-radius: var(--radius-xl);
+    }
+
+    .hero-copy {
+      padding: 32px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-copy::after {
+      content: "";
+      position: absolute;
+      inset: auto -80px -90px auto;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(44, 107, 114, 0.18), transparent 68%);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--secondary);
+      background: rgba(44, 107, 114, 0.08);
+      border: 1px solid rgba(44, 107, 114, 0.14);
+    }
+
+    .hero h1 {
+      margin: 18px 0 12px;
+      font-size: clamp(32px, 5vw, 56px);
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+      font-family: "Noto Serif SC", "Songti SC", serif;
+    }
+
+    .hero p {
+      margin: 0;
+      max-width: 60ch;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.8;
+    }
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .hero-tag {
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.52);
+      border: 1px solid rgba(107, 95, 87, 0.1);
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .hero-side {
+      padding: 22px;
+      display: grid;
+      gap: 14px;
+      align-content: start;
+    }
+
+    .metric-card {
+      padding: 18px;
+      border-radius: var(--radius-lg);
+      background: var(--surface-strong);
+      border: 1px solid rgba(107, 95, 87, 0.1);
+    }
+
+    .metric-label {
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .metric-value {
+      margin-top: 10px;
+      font-size: clamp(24px, 3vw, 34px);
+      font-weight: 700;
+      letter-spacing: -0.05em;
+    }
+
+    .workspace {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .sidebar {
+      padding: 24px;
+      position: sticky;
+      top: 20px;
+    }
+
+    .section-title {
+      margin: 0 0 6px;
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .section-desc {
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    .mode-grid {
+      display: grid;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .mode-card {
+      width: 100%;
+      border: 1px solid transparent;
+      border-radius: var(--radius-lg);
+      padding: 16px 18px;
+      background: var(--surface-strong);
+      color: inherit;
+      text-align: left;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+      box-shadow: 0 12px 30px rgba(121, 82, 42, 0.06);
+    }
+
+    .mode-card:hover,
+    .mode-card:focus-visible {
+      transform: translateY(-2px);
+      border-color: rgba(217, 119, 69, 0.32);
+      box-shadow: 0 18px 40px rgba(121, 82, 42, 0.12);
+      outline: none;
+    }
+
+    .mode-card.active {
+      border-color: rgba(217, 119, 69, 0.45);
+      background: linear-gradient(135deg, rgba(255, 241, 225, 0.95), rgba(255, 250, 244, 0.98));
+    }
+
+    .mode-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .mode-name {
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .mode-badge {
+      flex-shrink: 0;
+      padding: 5px 9px;
+      border-radius: 999px;
+      background: rgba(44, 107, 114, 0.09);
+      color: var(--secondary);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .mode-desc {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.65;
+    }
+
+    .controls {
+      display: grid;
+      gap: 16px;
+      margin-top: 10px;
+    }
+
+    .field {
+      display: grid;
+      gap: 8px;
+    }
+
+    .field label {
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .field input[type="range"] {
+      width: 100%;
+      accent-color: var(--primary);
+    }
+
+    .field-value {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--text);
+      font-size: 14px;
+    }
+
+    .action-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    .action-button {
+      flex: 1;
+      min-width: 120px;
+      padding: 12px 16px;
+      border: none;
+      border-radius: 14px;
+      font: inherit;
+      font-size: 13px;
+      cursor: pointer;
+      transition: transform 0.18s ease, filter 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .action-button:hover,
+    .action-button:focus-visible {
+      transform: translateY(-1px);
+      filter: brightness(1.02);
+      box-shadow: 0 14px 24px rgba(121, 82, 42, 0.14);
+      outline: none;
+    }
+
+    .action-button.primary {
+      color: #fff8f0;
+      background: linear-gradient(135deg, var(--primary), var(--primary-deep));
+    }
+
+    .action-button.ghost {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.66);
+      border: 1px solid rgba(107, 95, 87, 0.12);
+    }
+
+    .practice-panel {
+      padding: 24px;
+      min-height: 720px;
+    }
+
+    .practice-header {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 20px;
+    }
+
+    .practice-title h2 {
+      margin: 0 0 8px;
+      font-size: clamp(24px, 3vw, 34px);
+      letter-spacing: -0.04em;
+    }
+
+    .practice-title p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    .status-bar {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .status-card {
+      padding: 16px;
+      border-radius: 18px;
+      background: var(--surface-strong);
+      border: 1px solid rgba(107, 95, 87, 0.1);
+    }
+
+    .status-card span {
+      display: block;
+    }
+
+    .status-card .status-label {
+      font-size: 12px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .status-card .status-value {
+      margin-top: 8px;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(107, 95, 87, 0.12);
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+
+    .progress-value {
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--secondary), var(--primary));
+      transition: width 0.25s ease;
+    }
+
+    .empty-state {
+      display: grid;
+      place-items: center;
+      min-height: 420px;
+      border: 1px dashed rgba(107, 95, 87, 0.18);
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.35);
+      padding: 28px;
+      text-align: center;
+    }
+
+    .empty-state h3 {
+      margin: 0 0 10px;
+      font-size: 22px;
+    }
+
+    .empty-state p {
+      margin: 0;
+      max-width: 42ch;
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 14px;
+    }
+
+    .exercise-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .exercise-row {
+      display: grid;
+      grid-template-columns: 80px 32px 80px 32px minmax(100px, 140px) 90px 36px;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.58);
+      border: 1px solid rgba(107, 95, 87, 0.1);
+      transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+    }
+
+    .exercise-row:hover {
+      transform: translateY(-1px);
+      border-color: rgba(217, 119, 69, 0.22);
+      background: rgba(255, 255, 255, 0.75);
+    }
+
+    .formula {
+      font-size: 20px;
+      font-weight: 700;
+      text-align: center;
+      letter-spacing: -0.03em;
+    }
+
+    .formula.sign,
+    .formula.equal {
+      color: var(--muted);
+    }
+
+    .answer-input {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid rgba(107, 95, 87, 0.14);
+      border-radius: 14px;
+      background: rgba(255, 252, 248, 0.95);
+      font: inherit;
+      font-size: 18px;
+      text-align: center;
+      color: var(--text);
+      transition: border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+    }
+
+    .answer-input:focus {
+      outline: none;
+      border-color: rgba(217, 119, 69, 0.48);
+      box-shadow: 0 0 0 4px rgba(217, 119, 69, 0.12);
+      background: #fffdf9;
+    }
+
+    .truth {
+      color: var(--danger);
+      font-size: 16px;
+      text-align: center;
+      font-weight: 700;
+      min-height: 24px;
+    }
+
+    .truth.hidden {
+      visibility: hidden;
+    }
+
+    .judge {
+      display: grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .judge.pending {
+      color: var(--muted);
+      background: rgba(107, 95, 87, 0.08);
+    }
+
+    .judge.correct {
+      color: #fff;
+      background: var(--success);
+    }
+
+    .judge.wrong {
+      color: #fff;
+      background: var(--danger);
+    }
+
+    .footer-note {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    @media (max-width: 1080px) {
+      .hero,
+      .workspace {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        position: static;
+      }
+    }
+
+    @media (max-width: 820px) {
+      .status-bar {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .exercise-row {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .exercise-row .formula.equal,
+      .exercise-row .truth,
+      .exercise-row .judge {
+        grid-column: span 1;
+      }
+
+      .exercise-row .answer-input {
+        grid-column: span 2;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .app-shell {
+        width: min(100% - 18px, 100%);
+        margin: 14px auto 28px;
+      }
+
+      .hero-copy,
+      .hero-side,
+      .sidebar,
+      .practice-panel {
+        padding: 18px;
+      }
+
+      .status-bar {
+        grid-template-columns: 1fr;
+      }
+
+      .exercise-row {
+        grid-template-columns: 1fr 28px 1fr;
+      }
+
+      .exercise-row .formula.equal {
+        display: none;
+      }
+
+      .exercise-row .answer-input,
+      .exercise-row .truth,
+      .exercise-row .judge {
+        grid-column: 1 / -1;
+      }
+
+      .action-button {
+        width: 100%;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div id="main" class="main">
-        <button class="main_button button_front add_practic_button" @click="goto_add_practic(2)">2位数加法</button>
-        <button class="main_button button_front add_practic_button" @click="goto_add_practic(3)">3位数加法</button>
-        <button class="main_button button_front add_practic_button" @click="goto_add_practic(4)">随机位数加法</button>
-        <button class="main_button button_front sub_practic_button" @click="goto_sub_practic(2)">2位数减法</button>
-        <button class="main_button button_front sub_practic_button" @click="goto_sub_practic(3)">3位数减法</button>
-        <button class="main_button button_front sub_practic_button" @click="goto_sub_practic(4)">随机位数减法</button>
-        <button class="main_button button_front mul_practic_button" @click="goto_mul_practic(2, 2, 3)">2位数乘法(求前3位)</button>
-        <button class="main_button button_front mul_practic_button" @click="goto_mul_practic(3, 3, 3)">3位数乘法(求前3位)</button>
-        <button class="main_button button_front mul_practic_button" @click="goto_mul_practic(3, 2, 3)">3位数乘2位数乘法(求前3位)</button>
-        <button class="main_button button_front div_practic_button" @click="goto_div_practic(8, [2,3,4], 1)">除法(求首位)</button>
-        <button class="main_button button_front div_practic_button" @click="goto_div_practic(8, [2,3,4], 2)">除法(求首两位)</button>
-        <button class="main_button button_front div_practic_button" @click="goto_div_practic(8, [2,3,4], 3)">除法(求前3位)</button>
-        <div id="practic" class="practic">
-            <div id="counter"> 用时：{{ counter }} </div>
-            <div v-for="(item, index) in items">
-                <span class="formula" :style="{width: item.formulaWidth1+'px'}">{{item.first}}</span>
-                <span class="formula">{{item.sign}}</span>
-                <span class="formula":style="{width: item.formulaWidth2+'px'}">{{item.second}}</span>
-                <span class="formula">=</span>
-                <input class="clientAnswer" v-model.lazy.number="item.clientAnswer" @keyup.enter="change_focus($event, index)">
-                <span class="answer" :class="{'answer_hide': judge_answer_full_hide()}" :style="{width: item.formulaWidth3+'px'}">{{item.answer}}</span>
-                <span :class="{'answer_hide': judge_correct_hide(item)}">✔</span>
-                <span :class="{'answer_hide': judge_fault_hide(item)}">✖</span>
-            </div>
+  <div id="app" class="app-shell">
+    <section class="hero">
+      <div class="panel hero-copy">
+        <span class="eyebrow">Mental Math Lab</span>
+        <h1>公务员速算练习器</h1>
+        <p>
+          把原来简单的题目列表改成更适合连续训练的练习台。题型切换更清楚，结果反馈更直接，
+          出题规则也更稳定，适合做日常心算热身和刷题。
+        </p>
+        <div class="hero-tags">
+          <span class="hero-tag">加减乘除</span>
+          <span class="hero-tag">精确位数</span>
+          <span class="hero-tag">即时判定</span>
+          <span class="hero-tag">轻量动效</span>
         </div>
-    </div>
-</body>
-<style>
-.main_button {
-    color: rgb(255, 255, 255);
-    border: 1px solid rgb(64, 158, 255);
-    margin: 1px 0px 0px 10px;
-    padding: 12px 23px;
-    border-radius: 20px;
-}
-.button_front {
-    font-size: 14px;
-    line-height: 1;
-    display: inline-block;
-    white-space: nowrap;
-    cursor: pointer;
-    appearance: none;
-    text-align: center;
-    outline: none;
-    transition: all 0.1s ease 0s;
-    font-weight: 500;
-    user-select: none
-} 
+      </div>
+      <div class="panel hero-side">
+        <div class="metric-card">
+          <span class="metric-label">当前模式</span>
+          <div class="metric-value">{{ activeMode.name }}</div>
+        </div>
+        <div class="metric-card">
+          <span class="metric-label">本轮题量</span>
+          <div class="metric-value">{{ topicCount }} 题</div>
+        </div>
+        <div class="metric-card">
+          <span class="metric-label">题型说明</span>
+          <div class="section-desc" style="margin: 10px 0 0;">
+            {{ activeMode.description }}
+          </div>
+        </div>
+      </div>
+    </section>
 
-.add_practic_button {
-    background: rgb(64, 158, 255);
-}
+    <section class="workspace">
+      <aside class="panel sidebar">
+        <h2 class="section-title">练习模式</h2>
+        <p class="section-desc">选择模式后开始新一轮练习。随机题型会按合理范围生成，不再出现位数漂移或题意不稳定的问题。</p>
 
-.sub_practic_button {
-    background: rgb(255, 191, 64);
-}
+        <div class="mode-grid">
+          <button
+            v-for="mode in practiceModes"
+            :key="mode.id"
+            class="mode-card"
+            :class="{ active: mode.id === activeModeId }"
+            @click="selectMode(mode.id)"
+          >
+            <div class="mode-header">
+              <span class="mode-name">{{ mode.name }}</span>
+              <span class="mode-badge">{{ mode.badge }}</span>
+            </div>
+            <p class="mode-desc">{{ mode.description }}</p>
+          </button>
+        </div>
 
+        <div class="controls">
+          <div class="field">
+            <label for="topic-range">题目数量</label>
+            <input id="topic-range" v-model.number="topicCount" type="range" min="5" max="25" step="1">
+            <div class="field-value">
+              <span>当前</span>
+              <strong>{{ topicCount }} 题</strong>
+            </div>
+          </div>
 
-.mul_practic_button {
-    background: rgb(64, 47, 158);
-}
+          <div class="action-row">
+            <button class="action-button primary" @click="startPractice()">开始新一轮</button>
+            <button class="action-button ghost" @click="toggleRevealAnswers()">
+              {{ revealAnswers ? '隐藏答案' : '显示答案' }}
+            </button>
+          </div>
+        </div>
 
-.div_practic_button {
-    background: rgb(43, 139, 28);
-}
-.formula {
-    font-size: 18px;
-    display: inline-block;
-    text-align: center;
-    width: 20px;
-    padding: 10px 2px;
-    border: none;
-    margin: 1px 0px 0px 10px;
-    font-weight: 400;
-}
+        <p class="footer-note">
+          回车会自动跳到下一题。全部作答完成后计时自动停止，同时显示总体正确率。
+        </p>
+      </aside>
 
-.clientAnswer {
-    width: 100px;
-    font-size: 18px;
-    display: inline-block;
-    text-align: center;
-    padding: 10px 2px;
-    margin: 1px 0px 0px 10px;
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    border-bottom: 1px solid #000000;
-    font-weight: 400;
-}
+      <main class="panel practice-panel">
+        <div class="practice-header">
+          <div class="practice-title">
+            <h2>{{ activeMode.name }}</h2>
+            <p>{{ activeMode.description }}</p>
+          </div>
+        </div>
 
-.answer {
-    width: 60px;
-    font-size: 18px;
-    display: inline-block;
-    text-align: center;
-    padding: 10px 2px;
-    border: none;
-    margin: 1px 0px 0px 10px;
-    font-weight: 400;
-    color: red;
-}
+        <div class="status-bar">
+          <div class="status-card">
+            <span class="status-label">用时</span>
+            <span class="status-value">{{ formattedTime }}</span>
+          </div>
+          <div class="status-card">
+            <span class="status-label">进度</span>
+            <span class="status-value">{{ answeredCount }}/{{ items.length || topicCount }}</span>
+          </div>
+          <div class="status-card">
+            <span class="status-label">正确率</span>
+            <span class="status-value">{{ accuracyLabel }}</span>
+          </div>
+          <div class="status-card">
+            <span class="status-label">答对</span>
+            <span class="status-value">{{ correctCount }}</span>
+          </div>
+        </div>
 
-.answer_hide {
-    display: none;
-}
+        <div class="progress-track">
+          <div class="progress-value" :style="{ width: progressPercent + '%' }"></div>
+        </div>
 
-</style>
-<script src="https://unpkg.com/vue@next"></script>
-<script type="text/javascript">
-    const main = {
-        data() {
-            return {
-                items: [],
-                counter: 0,
-                allowAounter: false,
-                topic: 10
+        <section v-if="items.length === 0" class="empty-state">
+          <div>
+            <h3>先选一个模式开始</h3>
+            <p>
+              左侧点击题型卡片，然后开始练习。新的版本会尽量保证题目位数、答案位数和训练目标一致，
+              不会再随机出一些不太像样的边界题。
+            </p>
+          </div>
+        </section>
+
+        <section v-else class="exercise-list">
+          <div v-for="(item, index) in items" :key="item.id" class="exercise-row">
+            <span class="formula">{{ item.first }}</span>
+            <span class="formula sign">{{ item.sign }}</span>
+            <span class="formula">{{ item.second }}</span>
+            <span class="formula equal">=</span>
+            <input
+              class="answer-input"
+              type="number"
+              inputmode="numeric"
+              v-model.trim="item.clientAnswer"
+              :ref="setAnswerRef(index)"
+              @keyup.enter="focusNext(index)"
+            >
+            <span class="truth" :class="{ hidden: !shouldShowAnswer(item) }">{{ item.answer }}</span>
+            <span class="judge" :class="judgeClass(item)">{{ judgeSymbol(item) }}</span>
+          </div>
+        </section>
+      </main>
+    </section>
+  </div>
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+  <script>
+    const practiceModes = [
+      {
+        id: "add-2",
+        name: "2位数加法",
+        badge: "ADD",
+        description: "固定生成 10-99 的两位数相加，适合热身和找节奏。",
+        build(app) {
+          return app.createAdditionItem(2, 2);
+        }
+      },
+      {
+        id: "add-3",
+        name: "3位数加法",
+        badge: "ADD",
+        description: "固定生成 100-999 的三位数相加，强化列式心算。",
+        build(app) {
+          return app.createAdditionItem(3, 3);
+        }
+      },
+      {
+        id: "add-random",
+        name: "随机位数加法",
+        badge: "MIX",
+        description: "随机组合 2-4 位数，训练对不同位宽的适应能力。",
+        build(app) {
+          return app.createAdditionItem(app.randomInt(2, 4), app.randomInt(2, 4));
+        }
+      },
+      {
+        id: "sub-2",
+        name: "2位数减法",
+        badge: "SUB",
+        description: "固定两位数减法，结果始终非负，减少无效负数题。",
+        build(app) {
+          return app.createSubtractionItem(2, 2);
+        }
+      },
+      {
+        id: "sub-3",
+        name: "3位数减法",
+        badge: "SUB",
+        description: "固定三位数减法，控制难度同时保留借位空间。",
+        build(app) {
+          return app.createSubtractionItem(3, app.randomInt(2, 3));
+        }
+      },
+      {
+        id: "sub-random",
+        name: "随机位数减法",
+        badge: "MIX",
+        description: "随机组合 2-4 位数减法，并保证被减数不小于减数。",
+        build(app) {
+          return app.createSubtractionItem(app.randomInt(2, 4), app.randomInt(2, 4));
+        }
+      },
+      {
+        id: "mul-2x2",
+        name: "2位数乘法(求前3位)",
+        badge: "MUL",
+        description: "两位数乘两位数，只求积的前 3 位，适合速估训练。",
+        build(app) {
+          return app.createMultiplicationPrefixItem(2, 2, 3);
+        }
+      },
+      {
+        id: "mul-3x3",
+        name: "3位数乘法(求前3位)",
+        badge: "MUL",
+        description: "三位数乘三位数，只求积的前 3 位，提升数量级判断。",
+        build(app) {
+          return app.createMultiplicationPrefixItem(3, 3, 3);
+        }
+      },
+      {
+        id: "mul-3x2",
+        name: "3位乘2位(求前3位)",
+        badge: "MUL",
+        description: "三位数乘两位数，保留原题型，但稳定控制位数边界。",
+        build(app) {
+          return app.createMultiplicationPrefixItem(3, 2, 3);
+        }
+      },
+      {
+        id: "div-1",
+        name: "除法(求首位)",
+        badge: "DIV",
+        description: "先构造足够长的商，再生成除法题，确保首位训练目标明确。",
+        build(app) {
+          return app.createDivisionPrefixItem(8, [2, 3, 4], 1);
+        }
+      },
+      {
+        id: "div-2",
+        name: "除法(求首两位)",
+        badge: "DIV",
+        description: "商至少有两位，避免随机除法出现长度不足的问题。",
+        build(app) {
+          return app.createDivisionPrefixItem(8, [2, 3, 4], 2);
+        }
+      },
+      {
+        id: "div-3",
+        name: "除法(求前3位)",
+        badge: "DIV",
+        description: "商至少有三位，通过构造法确保题意稳定，适合速估前几位。",
+        build(app) {
+          return app.createDivisionPrefixItem(8, [2, 3, 4], 3);
+        }
+      }
+    ];
+
+    const app = {
+      data() {
+        return {
+          items: [],
+          secondsElapsed: 0,
+          timerId: null,
+          topicCount: 10,
+          revealAnswers: false,
+          activeModeId: "add-2",
+          answerRefs: []
+        };
+      },
+      computed: {
+        activeMode() {
+          return this.practiceModes.find((mode) => mode.id === this.activeModeId) || this.practiceModes[0];
+        },
+        answeredCount() {
+          return this.items.filter((item) => this.isAnswered(item)).length;
+        },
+        correctCount() {
+          return this.items.filter((item) => this.isCorrect(item)).length;
+        },
+        accuracy() {
+          return this.answeredCount === 0 ? 0 : Math.round((this.correctCount / this.answeredCount) * 100);
+        },
+        accuracyLabel() {
+          return this.answeredCount === 0 ? "--" : this.accuracy + "%";
+        },
+        progressPercent() {
+          return this.items.length === 0 ? 0 : Math.round((this.answeredCount / this.items.length) * 100);
+        },
+        formattedTime() {
+          const minutes = String(Math.floor(this.secondsElapsed / 60)).padStart(2, "0");
+          const seconds = String(this.secondsElapsed % 60).padStart(2, "0");
+          return minutes + ":" + seconds;
+        },
+        practiceModes() {
+          return practiceModes;
+        }
+      },
+      mounted() {
+        this.startTicker();
+        window.addEventListener("pointermove", this.handlePointerMove, { passive: true });
+      },
+      beforeUnmount() {
+        if (this.timerId) {
+          window.clearInterval(this.timerId);
+          this.timerId = null;
+        }
+        window.removeEventListener("pointermove", this.handlePointerMove);
+      },
+      methods: {
+        setAnswerRef(index) {
+          return (el) => {
+            if (el) {
+              this.answerRefs[index] = el;
             }
+          };
         },
-        mounted() {
-            setInterval(() => {
-                console.log(this.allowAounter)
-                if(this.allowAounter===true) {
-                    this.counter++
-                }
-            }, 1000)
+        handlePointerMove(event) {
+          document.documentElement.style.setProperty("--glow-x", event.clientX + "px");
+          document.documentElement.style.setProperty("--glow-y", event.clientY + "px");
         },
-        methods: {
-            change_focus($event, index) {
-                if (index+1 < this.topic) {
-                    let activeInput = document.activeElement
-                    let nextInput = activeInput.nextElementSibling.parentElement.nextElementSibling.getElementsByTagName("input")[0]
-                    activeInput && nextInput.focus();
-                }
-            },
-            judge_correct_hide(obj) {
-                // console.log(obj.hasOwnProperty("clientAnswer"))
-                if (obj.hasOwnProperty("clientAnswer")) {
-                    return obj.clientAnswer !== obj.answer
-                } else {
-                    return true
-                }
-            },
-            judge_fault_hide(obj) {
-                if (obj.hasOwnProperty("clientAnswer")) {
-                    return obj.clientAnswer === obj.answer
-                } else {
-                    return true
-                }
-            },
-            judge_answer_full_hide() {
-                let clientAnswers = []
-                for (i of this.items) {
-                    if (i.hasOwnProperty("clientAnswer")) {
-                        clientAnswers.push(i.clientAnswer)
-                    }
-                }
-                let JudgeStop = false 
-                if (clientAnswers.length !== this.topic) {
-                    JudgeStop = true
-                }
-                this.allowAounter = JudgeStop
-                return JudgeStop
-            },
-            goto_add_practic(mul) {
-                this.counter = 0
-                this.allowAounter = true
-                this.items=[]
-                console.log(this.allowAounter)
-                for (i=0; i<this.topic; i++) {
-                    let first = Math.ceil(Math.random()*Math.pow(10, mul))
-                    let second = Math.ceil(Math.random()*Math.pow(10, mul))
-                    this.items.push({
-                        first, 
-                        sign: "➕", 
-                        second,
-                        answer: first+second,
-                        formulaWidth1: 10*mul,
-                        formulaWidth2: 10*mul,
-                        formulaWidth3: 15*mul
-                    })
-                }
-            },
-            goto_sub_practic(mul) {
-                this.counter = 0
-                this.allowAounter = true
-                this.items=[]
-                console.log(this.allowAounter)
-                for (i=0; i<this.topic; i++) {
-                    // 被减数可以随机减一位
-                    secondMulSub = Math.round(Math.random())
-                    let first = Math.ceil(Math.random()*Math.pow(10, mul))
-                    let second = Math.ceil(Math.random()*Math.pow(10, mul-secondMulSub))
-                    this.items.push({
-                        first, 
-                        sign: "➖", 
-                        second,
-                        answer: first-second,
-                        formulaWidth1: 10*mul,
-                        formulaWidth2: 10*mul,
-                        formulaWidth3: 10*mul
-                    })
-                }
-            },
-            goto_mul_practic(mul1, mul2, sub) {
-                this.counter = 0
-                this.allowAounter = true
-                this.items=[]
-                for (i=0; i<this.topic; i++) {
-                    let first = Math.ceil(Math.random()*Math.pow(10, mul1))
-                    let second = Math.ceil(Math.random()*Math.pow(10, mul2))
-                    let answer = Number(Math.floor(first*second).toString().substring(0,sub))
-                    this.items.push({
-                        first, 
-                        sign: "✖", 
-                        second,
-                        answer,
-                        formulaWidth1: 10*mul1,
-                        formulaWidth2: 10*mul2,
-                        formulaWidth3: 10*(mul1+mul2)
-                    })
-                }
-            },
-            goto_div_practic(mul1, randList, sub) {
-                this.counter = 0
-                this.allowAounter = true
-                this.items=[]
-                for (i=0; i<this.topic; i++) {
-                    let mul2 = randList[Math.floor(Math.random()*randList.length)]
-                    let first = Math.ceil(Math.random()*Math.pow(10, mul1))
-                    let second = Math.ceil(Math.random()*Math.pow(10, mul2))
-                    let answer = Number(Math.floor(first/second).toString().substring(0,sub))
-                    this.items.push({
-                        first, 
-                        sign: "➗", 
-                        second,
-                        answer,
-                        formulaWidth1: 10*mul1,
-                        formulaWidth2: 10*mul2,
-                        formulaWidth3: 20*sub
-                    })
-                }
-            },
-        } 
-    }
-    Vue.createApp(main).mount('#main')
-</script>
+        startTicker() {
+          if (this.timerId) {
+            return;
+          }
+          this.timerId = window.setInterval(() => {
+            if (this.items.length > 0 && this.answeredCount < this.items.length) {
+              this.secondsElapsed += 1;
+            }
+          }, 1000);
+        },
+        resetTimer() {
+          this.secondsElapsed = 0;
+        },
+        selectMode(modeId) {
+          this.activeModeId = modeId;
+          this.startPractice();
+        },
+        startPractice() {
+          this.resetTimer();
+          this.revealAnswers = false;
+          this.answerRefs = [];
+          this.items = Array.from({ length: this.topicCount }, (_, index) => ({
+            id: this.activeMode.id + "-" + index + "-" + Date.now(),
+            clientAnswer: "",
+            ...this.activeMode.build(this)
+          }));
+          this.$nextTick(() => {
+            if (this.answerRefs[0]) {
+              this.answerRefs[0].focus();
+            }
+          });
+        },
+        toggleRevealAnswers() {
+          this.revealAnswers = !this.revealAnswers;
+        },
+        focusNext(index) {
+          const next = this.answerRefs[index + 1];
+          if (next) {
+            next.focus();
+          }
+        },
+        isAnswered(item) {
+          return item.clientAnswer !== "" && item.clientAnswer !== null && item.clientAnswer !== undefined;
+        },
+        normalizedAnswer(item) {
+          return String(item.clientAnswer).trim();
+        },
+        isCorrect(item) {
+          return this.isAnswered(item) && this.normalizedAnswer(item) === String(item.answer);
+        },
+        shouldShowAnswer(item) {
+          return this.revealAnswers || (this.items.length > 0 && this.answeredCount >= this.items.length && !this.isCorrect(item));
+        },
+        judgeClass(item) {
+          if (!this.isAnswered(item)) {
+            return "pending";
+          }
+          return this.isCorrect(item) ? "correct" : "wrong";
+        },
+        judgeSymbol(item) {
+          if (!this.isAnswered(item)) {
+            return "…";
+          }
+          return this.isCorrect(item) ? "✓" : "✕";
+        },
+        randomInt(min, max) {
+          return Math.floor(Math.random() * (max - min + 1)) + min;
+        },
+        numberRangeByDigits(digits) {
+          const safeDigits = Math.max(1, digits);
+          const min = safeDigits === 1 ? 0 : Math.pow(10, safeDigits - 1);
+          const max = Math.pow(10, safeDigits) - 1;
+          return { min, max };
+        },
+        randomNumberByDigits(digits) {
+          const range = this.numberRangeByDigits(digits);
+          return this.randomInt(range.min, range.max);
+        },
+        createAdditionItem(firstDigits, secondDigits) {
+          const first = this.randomNumberByDigits(firstDigits);
+          const second = this.randomNumberByDigits(secondDigits);
+          return {
+            first,
+            sign: "+",
+            second,
+            answer: first + second
+          };
+        },
+        createSubtractionItem(firstDigits, secondDigits) {
+          const first = this.randomNumberByDigits(firstDigits);
+          const rawSecond = this.randomNumberByDigits(secondDigits);
+          const second = Math.min(rawSecond, first);
+          return {
+            first,
+            sign: "-",
+            second,
+            answer: first - second
+          };
+        },
+        createMultiplicationPrefixItem(firstDigits, secondDigits, prefixDigits) {
+          const first = this.randomNumberByDigits(firstDigits);
+          const second = this.randomNumberByDigits(secondDigits);
+          const answer = String(first * second).slice(0, prefixDigits);
+          return {
+            first,
+            sign: "×",
+            second,
+            answer
+          };
+        },
+        createDivisionPrefixItem(dividendDigits, divisorDigitsPool, prefixDigits) {
+          for (let attempt = 0; attempt < 80; attempt += 1) {
+            const divisorDigits = divisorDigitsPool[this.randomInt(0, divisorDigitsPool.length - 1)];
+            const divisor = this.randomNumberByDigits(divisorDigits);
+            const quotientDigitsMin = Math.max(prefixDigits + 1, dividendDigits - divisorDigits);
+            const quotientDigitsMax = Math.max(quotientDigitsMin, dividendDigits - divisorDigits + 1);
+            const quotientDigits = this.randomInt(quotientDigitsMin, quotientDigitsMax);
+            const quotient = this.randomNumberByDigits(quotientDigits);
+            const remainder = this.randomInt(0, divisor - 1);
+            const dividend = divisor * quotient + remainder;
+
+            if (String(dividend).length !== dividendDigits) {
+              continue;
+            }
+
+            return {
+              first: dividend,
+              sign: "÷",
+              second: divisor,
+              answer: String(quotient).slice(0, prefixDigits)
+            };
+          }
+
+          return {
+            first: 10000000,
+            sign: "÷",
+            second: 125,
+            answer: "800".slice(0, prefixDigits)
+          };
+        }
+      }
+    };
+
+    Vue.createApp(app).mount("#app");
+  </script>
+</body>
 </html>
