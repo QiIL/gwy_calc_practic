@@ -13,25 +13,26 @@
   <link rel="icon" href="favicon.ico" type="image/x-icon">
   <style>
     :root {
-      --bg: #f3efe6;
-      --bg-accent: #f7d9a6;
-      --surface: rgba(255, 252, 246, 0.78);
-      --surface-strong: rgba(255, 249, 241, 0.94);
-      --surface-dark: #202530;
-      --text: #2f241d;
-      --muted: #6b5f57;
-      --line: rgba(107, 95, 87, 0.18);
-      --primary: #d97745;
-      --primary-deep: #a74d21;
-      --secondary: #2c6b72;
-      --success: #237a57;
-      --danger: #cf4b4b;
-      --shadow: 0 24px 60px rgba(121, 82, 42, 0.12);
-      --radius-xl: 28px;
-      --radius-lg: 20px;
-      --radius-md: 14px;
-      --glow-x: 50%;
-      --glow-y: 20%;
+      --bg: #efe7db;
+      --bg-deep: #e7dccd;
+      --surface: rgba(255, 251, 245, 0.74);
+      --surface-strong: rgba(255, 252, 247, 0.92);
+      --surface-alt: rgba(31, 39, 52, 0.88);
+      --text: #2b241f;
+      --muted: #6d6258;
+      --primary: #c8693e;
+      --primary-strong: #a44b23;
+      --secondary: #275b67;
+      --accent: #edd4aa;
+      --success: #277554;
+      --danger: #c54c49;
+      --line: rgba(81, 59, 43, 0.12);
+      --shadow: 0 28px 80px rgba(106, 71, 38, 0.14);
+      --radius-xl: 30px;
+      --radius-lg: 22px;
+      --radius-md: 16px;
+      --glow-x: 48%;
+      --glow-y: 16%;
     }
 
     * {
@@ -44,10 +45,10 @@
       margin: 0;
       color: var(--text);
       background:
-        radial-gradient(circle at 10% 20%, rgba(255, 215, 158, 0.42), transparent 32%),
-        radial-gradient(circle at 90% 10%, rgba(101, 167, 174, 0.24), transparent 26%),
-        linear-gradient(180deg, #f9f4ec 0%, #f3efe6 40%, #efe7dc 100%);
-      font-family: "Azeret Mono", "SFMono-Regular", "Menlo", "Monaco", "Consolas", monospace;
+        radial-gradient(circle at 12% 18%, rgba(255, 209, 148, 0.42), transparent 26%),
+        radial-gradient(circle at 88% 10%, rgba(65, 142, 155, 0.22), transparent 24%),
+        linear-gradient(180deg, #f6f0e8 0%, var(--bg) 45%, var(--bg-deep) 100%);
+      font-family: "Azeret Mono", "SFMono-Regular", "Menlo", "Consolas", monospace;
       overflow-x: hidden;
     }
 
@@ -56,9 +57,7 @@
       position: fixed;
       inset: 0;
       pointer-events: none;
-      background:
-        radial-gradient(circle 240px at var(--glow-x) var(--glow-y), rgba(255, 173, 92, 0.18), transparent 70%);
-      transition: background-position 0.16s ease-out;
+      background: radial-gradient(circle 280px at var(--glow-x) var(--glow-y), rgba(255, 176, 99, 0.18), transparent 72%);
       z-index: 0;
     }
 
@@ -67,225 +66,264 @@
       position: fixed;
       inset: 0;
       pointer-events: none;
-      opacity: 0.22;
+      opacity: 0.18;
       background-image:
-        linear-gradient(rgba(255, 255, 255, 0.35) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.35) 1px, transparent 1px);
-      background-size: 36px 36px;
-      mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.55), transparent 88%);
+        linear-gradient(rgba(255, 255, 255, 0.4) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.4) 1px, transparent 1px);
+      background-size: 38px 38px;
+      mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.7), transparent 88%);
       z-index: 0;
+    }
+
+    button,
+    input {
+      font: inherit;
     }
 
     .app-shell {
       position: relative;
       z-index: 1;
-      width: min(1180px, calc(100% - 32px));
-      margin: 28px auto 56px;
-    }
-
-    .hero {
-      display: grid;
-      grid-template-columns: 1.3fr 0.9fr;
-      gap: 24px;
-      margin-bottom: 24px;
+      width: min(1200px, calc(100% - 28px));
+      margin: 22px auto 44px;
     }
 
     .panel {
-      border: 1px solid rgba(255, 255, 255, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.54);
       background: var(--surface);
-      backdrop-filter: blur(18px);
+      backdrop-filter: blur(16px);
       box-shadow: var(--shadow);
       border-radius: var(--radius-xl);
     }
 
-    .hero-copy {
-      padding: 32px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero-copy::after {
-      content: "";
-      position: absolute;
-      inset: auto -80px -90px auto;
-      width: 220px;
-      height: 220px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(44, 107, 114, 0.18), transparent 68%);
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 12px;
-      border-radius: 999px;
-      font-size: 12px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--secondary);
-      background: rgba(44, 107, 114, 0.08);
-      border: 1px solid rgba(44, 107, 114, 0.14);
-    }
-
-    .hero h1 {
-      margin: 18px 0 12px;
-      font-size: clamp(32px, 5vw, 56px);
-      line-height: 1.05;
-      letter-spacing: -0.04em;
-      font-family: "Noto Serif SC", "Songti SC", serif;
-    }
-
-    .hero p {
-      margin: 0;
-      max-width: 60ch;
-      color: var(--muted);
-      font-size: 15px;
-      line-height: 1.8;
-    }
-
-    .hero-tags {
+    .topbar {
       display: flex;
       flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 18px;
+      padding: 22px 26px;
+    }
+
+    .brand-line {
+      display: inline-flex;
+      align-items: center;
       gap: 10px;
-      margin-top: 22px;
-    }
-
-    .hero-tag {
-      padding: 8px 12px;
+      padding: 7px 12px;
       border-radius: 999px;
-      background: rgba(255, 255, 255, 0.52);
-      border: 1px solid rgba(107, 95, 87, 0.1);
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    .hero-side {
-      padding: 22px;
-      display: grid;
-      gap: 14px;
-      align-content: start;
-    }
-
-    .metric-card {
-      padding: 18px;
-      border-radius: var(--radius-lg);
-      background: var(--surface-strong);
-      border: 1px solid rgba(107, 95, 87, 0.1);
-    }
-
-    .metric-label {
+      background: rgba(39, 91, 103, 0.1);
+      color: var(--secondary);
       font-size: 12px;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: var(--muted);
     }
 
-    .metric-value {
-      margin-top: 10px;
-      font-size: clamp(24px, 3vw, 34px);
-      font-weight: 700;
+    .topbar h1 {
+      margin: 14px 0 8px;
+      font-family: "Noto Serif SC", "Songti SC", serif;
+      font-size: clamp(30px, 4vw, 50px);
+      line-height: 1.05;
       letter-spacing: -0.05em;
     }
 
-    .workspace {
-      display: grid;
-      grid-template-columns: 360px 1fr;
-      gap: 24px;
-      align-items: start;
-    }
-
-    .sidebar {
-      padding: 24px;
-      position: sticky;
-      top: 20px;
-    }
-
-    .section-title {
-      margin: 0 0 6px;
-      font-size: 16px;
-      font-weight: 700;
-    }
-
-    .section-desc {
-      margin: 0 0 18px;
+    .topbar p {
+      margin: 0;
+      max-width: 64ch;
       color: var(--muted);
-      font-size: 13px;
-      line-height: 1.7;
+      font-size: 14px;
+      line-height: 1.8;
     }
 
-    .mode-grid {
+    .hero-metrics {
       display: grid;
       gap: 12px;
-      margin-bottom: 20px;
+      min-width: 260px;
     }
 
-    .mode-card {
-      width: 100%;
-      border: 1px solid transparent;
-      border-radius: var(--radius-lg);
+    .metric {
       padding: 16px 18px;
+      border-radius: var(--radius-lg);
       background: var(--surface-strong);
-      color: inherit;
-      text-align: left;
-      cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-      box-shadow: 0 12px 30px rgba(121, 82, 42, 0.06);
+      border: 1px solid rgba(81, 59, 43, 0.08);
     }
 
-    .mode-card:hover,
-    .mode-card:focus-visible {
-      transform: translateY(-2px);
-      border-color: rgba(217, 119, 69, 0.32);
-      box-shadow: 0 18px 40px rgba(121, 82, 42, 0.12);
-      outline: none;
-    }
-
-    .mode-card.active {
-      border-color: rgba(217, 119, 69, 0.45);
-      background: linear-gradient(135deg, rgba(255, 241, 225, 0.95), rgba(255, 250, 244, 0.98));
-    }
-
-    .mode-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      margin-bottom: 8px;
-    }
-
-    .mode-name {
-      font-size: 16px;
-      font-weight: 700;
-    }
-
-    .mode-badge {
-      flex-shrink: 0;
-      padding: 5px 9px;
-      border-radius: 999px;
-      background: rgba(44, 107, 114, 0.09);
-      color: var(--secondary);
+    .metric-label {
+      display: block;
+      color: var(--muted);
       font-size: 11px;
       letter-spacing: 0.08em;
       text-transform: uppercase;
     }
 
-    .mode-desc {
+    .metric-value {
+      margin-top: 8px;
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.05em;
+    }
+
+    .stepper {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .step {
+      padding: 16px 18px;
+      border-radius: var(--radius-lg);
+      background: rgba(255, 255, 255, 0.46);
+      border: 1px solid rgba(81, 59, 43, 0.08);
+      transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .step.active {
+      transform: translateY(-2px);
+      background: linear-gradient(135deg, rgba(255, 239, 214, 0.92), rgba(255, 252, 248, 0.96));
+      border-color: rgba(200, 105, 62, 0.36);
+    }
+
+    .step-index {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgba(39, 91, 103, 0.1);
+      color: var(--secondary);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .step h2 {
+      margin: 10px 0 6px;
+      font-size: 17px;
+    }
+
+    .step p {
       margin: 0;
       color: var(--muted);
       font-size: 12px;
-      line-height: 1.65;
+      line-height: 1.7;
     }
 
-    .controls {
+    .page {
+      padding: 24px;
+    }
+
+    .setup-grid {
       display: grid;
-      gap: 16px;
-      margin-top: 10px;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .setup-card {
+      grid-column: span 6;
+      padding: 22px;
+      border-radius: var(--radius-xl);
+      background: var(--surface-strong);
+      border: 1px solid rgba(81, 59, 43, 0.08);
+    }
+
+    .setup-card.wide {
+      grid-column: span 12;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: start;
+      margin-bottom: 16px;
+    }
+
+    .card-header h3 {
+      margin: 0 0 6px;
+      font-size: 18px;
+    }
+
+    .card-header p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    .pill {
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(39, 91, 103, 0.1);
+      color: var(--secondary);
+      font-size: 11px;
+      white-space: nowrap;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .mode-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .choice-card,
+    .mini-choice {
+      width: 100%;
+      padding: 16px;
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(81, 59, 43, 0.1);
+      background: rgba(255, 255, 255, 0.54);
+      color: inherit;
+      text-align: left;
+      cursor: pointer;
+      transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .choice-card:hover,
+    .choice-card:focus-visible,
+    .mini-choice:hover,
+    .mini-choice:focus-visible {
+      transform: translateY(-1px);
+      border-color: rgba(200, 105, 62, 0.3);
+      box-shadow: 0 12px 28px rgba(106, 71, 38, 0.08);
+      outline: none;
+    }
+
+    .choice-card.active,
+    .mini-choice.active {
+      border-color: rgba(200, 105, 62, 0.42);
+      background: linear-gradient(135deg, rgba(255, 241, 223, 0.96), rgba(255, 252, 248, 0.98));
+    }
+
+    .choice-card strong,
+    .mini-choice strong {
+      display: block;
+      font-size: 15px;
+      margin-bottom: 8px;
+    }
+
+    .choice-card span,
+    .mini-choice span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    .mini-choice-row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
     }
 
     .field {
       display: grid;
       gap: 8px;
+    }
+
+    .field + .field {
+      margin-top: 16px;
     }
 
     .field label {
@@ -300,468 +338,773 @@
       accent-color: var(--primary);
     }
 
+    .field input[type="text"] {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(81, 59, 43, 0.12);
+      background: rgba(255, 255, 255, 0.74);
+      color: var(--text);
+    }
+
     .field-value {
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      color: var(--text);
+      align-items: center;
+      gap: 12px;
       font-size: 14px;
+    }
+
+    .setup-summary {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .summary-chip {
+      padding: 14px;
+      border-radius: var(--radius-lg);
+      background: rgba(255, 255, 255, 0.48);
+      border: 1px solid rgba(81, 59, 43, 0.08);
+    }
+
+    .summary-chip span {
+      display: block;
+    }
+
+    .summary-chip .label {
+      color: var(--muted);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .summary-chip .value {
+      margin-top: 8px;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.04em;
     }
 
     .action-row {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 6px;
+      gap: 12px;
+      margin-top: 20px;
     }
 
-    .action-button {
-      flex: 1;
-      min-width: 120px;
-      padding: 12px 16px;
+    .button {
       border: none;
+      padding: 13px 18px;
       border-radius: 14px;
-      font: inherit;
-      font-size: 13px;
       cursor: pointer;
-      transition: transform 0.18s ease, filter 0.18s ease, box-shadow 0.18s ease;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
     }
 
-    .action-button:hover,
-    .action-button:focus-visible {
+    .button:hover,
+    .button:focus-visible {
       transform: translateY(-1px);
       filter: brightness(1.02);
-      box-shadow: 0 14px 24px rgba(121, 82, 42, 0.14);
+      box-shadow: 0 16px 28px rgba(106, 71, 38, 0.12);
       outline: none;
     }
 
-    .action-button.primary {
-      color: #fff8f0;
-      background: linear-gradient(135deg, var(--primary), var(--primary-deep));
+    .button.primary {
+      color: #fff8f1;
+      background: linear-gradient(135deg, var(--primary), var(--primary-strong));
     }
 
-    .action-button.ghost {
+    .button.secondary {
+      color: white;
+      background: linear-gradient(135deg, var(--secondary), #1f4851);
+    }
+
+    .button.ghost {
       color: var(--text);
-      background: rgba(255, 255, 255, 0.66);
-      border: 1px solid rgba(107, 95, 87, 0.12);
+      background: rgba(255, 255, 255, 0.58);
+      border: 1px solid rgba(81, 59, 43, 0.08);
     }
 
-    .practice-panel {
-      padding: 24px;
-      min-height: 720px;
+    .exam-shell {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 18px;
     }
 
-    .practice-header {
+    .exam-sidebar,
+    .exam-board,
+    .summary-layout {
+      padding: 22px;
+      border-radius: var(--radius-xl);
+      background: var(--surface-strong);
+      border: 1px solid rgba(81, 59, 43, 0.08);
+    }
+
+    .exam-sidebar {
+      display: grid;
+      gap: 12px;
+      align-content: start;
+      position: sticky;
+      top: 20px;
+      max-height: calc(100vh - 58px);
+    }
+
+    .exam-sidebar.dark {
+      background: linear-gradient(180deg, rgba(38, 46, 60, 0.96), rgba(28, 35, 49, 0.96));
+      color: #f5efe7;
+      border-color: rgba(255, 255, 255, 0.08);
+    }
+
+    .exam-sidebar.dark .metric-label,
+    .exam-sidebar.dark .sidebar-note,
+    .exam-sidebar.dark .tiny-label {
+      color: rgba(245, 239, 231, 0.7);
+    }
+
+    .exam-sidebar.dark .sidebar-chip {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.08);
+      color: #f5efe7;
+    }
+
+    .sidebar-block {
+      padding: 16px;
+      border-radius: var(--radius-lg);
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .sidebar-value {
+      margin-top: 8px;
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.05em;
+    }
+
+    .sidebar-note {
+      margin: 0;
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    .sidebar-chip-row {
       display: flex;
       flex-wrap: wrap;
-      gap: 14px;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 20px;
+      gap: 8px;
+      margin-top: 10px;
     }
 
-    .practice-title h2 {
-      margin: 0 0 8px;
+    .sidebar-chip {
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.56);
+      border: 1px solid rgba(81, 59, 43, 0.1);
+      font-size: 11px;
+    }
+
+    .tiny-label {
+      display: block;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .exam-board-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    .exam-board-header h2,
+    .summary-layout h2 {
+      margin: 0 0 6px;
       font-size: clamp(24px, 3vw, 34px);
       letter-spacing: -0.04em;
     }
 
-    .practice-title p {
+    .exam-board-header p,
+    .summary-layout p {
       margin: 0;
       color: var(--muted);
-      line-height: 1.7;
-      font-size: 14px;
-    }
-
-    .status-bar {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 12px;
-      margin-bottom: 20px;
-    }
-
-    .status-card {
-      padding: 16px;
-      border-radius: 18px;
-      background: var(--surface-strong);
-      border: 1px solid rgba(107, 95, 87, 0.1);
-    }
-
-    .status-card span {
-      display: block;
-    }
-
-    .status-card .status-label {
-      font-size: 12px;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-
-    .status-card .status-value {
-      margin-top: 8px;
-      font-size: 22px;
-      font-weight: 700;
-      letter-spacing: -0.04em;
+      font-size: 13px;
+      line-height: 1.8;
     }
 
     .progress-track {
       width: 100%;
       height: 10px;
       border-radius: 999px;
-      background: rgba(107, 95, 87, 0.12);
       overflow: hidden;
-      margin-bottom: 24px;
+      background: rgba(81, 59, 43, 0.1);
+      margin-bottom: 18px;
     }
 
     .progress-value {
       height: 100%;
       border-radius: inherit;
       background: linear-gradient(90deg, var(--secondary), var(--primary));
-      transition: width 0.25s ease;
+      transition: width 0.2s ease;
     }
 
-    .empty-state {
-      display: grid;
-      place-items: center;
-      min-height: 420px;
-      border: 1px dashed rgba(107, 95, 87, 0.18);
-      border-radius: 24px;
-      background: rgba(255, 255, 255, 0.35);
-      padding: 28px;
-      text-align: center;
-    }
-
-    .empty-state h3 {
-      margin: 0 0 10px;
-      font-size: 22px;
-    }
-
-    .empty-state p {
-      margin: 0;
-      max-width: 42ch;
-      color: var(--muted);
-      line-height: 1.8;
-      font-size: 14px;
-    }
-
-    .exercise-list {
+    .question-list {
       display: grid;
       gap: 12px;
     }
 
-    .exercise-row {
+    .question-card {
       display: grid;
-      grid-template-columns: 80px 32px 80px 32px minmax(100px, 140px) 90px 36px;
+      grid-template-columns: 82px 32px 82px 32px minmax(120px, 160px) minmax(86px, 110px) 40px;
       align-items: center;
       gap: 12px;
-      padding: 14px 16px;
+      padding: 15px 16px;
       border-radius: 18px;
-      background: rgba(255, 255, 255, 0.58);
-      border: 1px solid rgba(107, 95, 87, 0.1);
+      background: rgba(255, 255, 255, 0.62);
+      border: 1px solid rgba(81, 59, 43, 0.09);
       transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
     }
 
-    .exercise-row:hover {
+    .question-card:hover {
       transform: translateY(-1px);
-      border-color: rgba(217, 119, 69, 0.22);
-      background: rgba(255, 255, 255, 0.75);
+      border-color: rgba(200, 105, 62, 0.24);
+      background: rgba(255, 255, 255, 0.78);
     }
 
     .formula {
+      text-align: center;
       font-size: 20px;
       font-weight: 700;
-      text-align: center;
-      letter-spacing: -0.03em;
+      letter-spacing: -0.04em;
     }
 
-    .formula.sign,
-    .formula.equal {
+    .formula.muted {
       color: var(--muted);
     }
 
     .answer-input {
       width: 100%;
       padding: 12px 14px;
-      border: 1px solid rgba(107, 95, 87, 0.14);
       border-radius: 14px;
-      background: rgba(255, 252, 248, 0.95);
-      font: inherit;
-      font-size: 18px;
+      border: 1px solid rgba(81, 59, 43, 0.12);
+      background: rgba(255, 253, 248, 0.96);
       text-align: center;
+      font-size: 18px;
       color: var(--text);
-      transition: border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+      transition: border-color 0.18s ease, box-shadow 0.18s ease;
     }
 
     .answer-input:focus {
       outline: none;
-      border-color: rgba(217, 119, 69, 0.48);
-      box-shadow: 0 0 0 4px rgba(217, 119, 69, 0.12);
-      background: #fffdf9;
+      border-color: rgba(200, 105, 62, 0.4);
+      box-shadow: 0 0 0 4px rgba(200, 105, 62, 0.12);
     }
 
-    .truth {
-      color: var(--danger);
-      font-size: 16px;
+    .inline-answer {
       text-align: center;
+      font-size: 15px;
+      color: var(--danger);
       font-weight: 700;
-      min-height: 24px;
+      min-height: 20px;
     }
 
-    .truth.hidden {
+    .inline-answer.hidden {
       visibility: hidden;
     }
 
     .judge {
       display: grid;
       place-items: center;
-      width: 34px;
-      height: 34px;
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 700;
     }
 
     .judge.pending {
       color: var(--muted);
-      background: rgba(107, 95, 87, 0.08);
+      background: rgba(81, 59, 43, 0.08);
     }
 
     .judge.correct {
-      color: #fff;
+      color: white;
       background: var(--success);
     }
 
     .judge.wrong {
-      color: #fff;
+      color: white;
       background: var(--danger);
     }
 
-    .footer-note {
-      margin-top: 18px;
+    .summary-layout {
+      display: grid;
+      gap: 18px;
+    }
+
+    .summary-stats {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .stat-card {
+      padding: 16px;
+      border-radius: var(--radius-lg);
+      background: rgba(255, 255, 255, 0.56);
+      border: 1px solid rgba(81, 59, 43, 0.08);
+    }
+
+    .stat-card strong {
+      display: block;
+      margin-top: 8px;
+      font-size: 24px;
+      letter-spacing: -0.05em;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 18px;
+    }
+
+    .subpanel {
+      padding: 18px;
+      border-radius: var(--radius-lg);
+      background: rgba(255, 255, 255, 0.48);
+      border: 1px solid rgba(81, 59, 43, 0.08);
+    }
+
+    .subpanel h3 {
+      margin: 0 0 10px;
+      font-size: 18px;
+    }
+
+    .subpanel p {
+      margin: 0 0 14px;
       color: var(--muted);
       font-size: 12px;
       line-height: 1.7;
     }
 
+    .wrong-list,
+    .history-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .wrong-item,
+    .history-item {
+      padding: 14px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.62);
+      border: 1px solid rgba(81, 59, 43, 0.08);
+    }
+
+    .wrong-formula {
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+    }
+
+    .wrong-meta,
+    .history-meta {
+      margin-top: 8px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .empty-box {
+      padding: 18px;
+      border-radius: 16px;
+      border: 1px dashed rgba(81, 59, 43, 0.16);
+      background: rgba(255, 255, 255, 0.38);
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.8;
+    }
+
     @media (max-width: 1080px) {
-      .hero,
-      .workspace {
+      .setup-card,
+      .setup-card.wide,
+      .summary-grid,
+      .exam-shell {
+        grid-column: span 12;
         grid-template-columns: 1fr;
       }
 
-      .sidebar {
-        position: static;
-      }
-    }
-
-    @media (max-width: 820px) {
-      .status-bar {
+      .setup-summary,
+      .summary-stats {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
-      .exercise-row {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-        gap: 10px;
+      .exam-sidebar {
+        position: static;
+        max-height: none;
+      }
+    }
+
+    @media (max-width: 860px) {
+      .mode-grid,
+      .mini-choice-row {
+        grid-template-columns: 1fr;
       }
 
-      .exercise-row .formula.equal,
-      .exercise-row .truth,
-      .exercise-row .judge {
+      .question-card {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
+      .question-card .formula.equal,
+      .question-card .inline-answer,
+      .question-card .judge {
         grid-column: span 1;
       }
 
-      .exercise-row .answer-input {
+      .question-card .answer-input {
         grid-column: span 2;
       }
     }
 
-    @media (max-width: 560px) {
+    @media (max-width: 640px) {
       .app-shell {
-        width: min(100% - 18px, 100%);
-        margin: 14px auto 28px;
+        width: min(100% - 16px, 100%);
+        margin: 12px auto 28px;
       }
 
-      .hero-copy,
-      .hero-side,
-      .sidebar,
-      .practice-panel {
+      .topbar,
+      .page {
         padding: 18px;
       }
 
-      .status-bar {
+      .stepper,
+      .setup-summary,
+      .summary-stats {
         grid-template-columns: 1fr;
       }
 
-      .exercise-row {
+      .question-card {
         grid-template-columns: 1fr 28px 1fr;
       }
 
-      .exercise-row .formula.equal {
+      .question-card .formula.equal {
         display: none;
       }
 
-      .exercise-row .answer-input,
-      .exercise-row .truth,
-      .exercise-row .judge {
+      .question-card .answer-input,
+      .question-card .inline-answer,
+      .question-card .judge {
         grid-column: 1 / -1;
-      }
-
-      .action-button {
-        width: 100%;
       }
     }
   </style>
 </head>
 <body>
   <div id="app" class="app-shell">
-    <section class="hero">
-      <div class="panel hero-copy">
-        <span class="eyebrow">Mental Math Lab</span>
+    <header class="panel topbar">
+      <div>
+        <span class="brand-line">Mental Math / Exam Flow</span>
         <h1>公务员速算练习器</h1>
-        <p>
-          把原来简单的题目列表改成更适合连续训练的练习台。题型切换更清楚，结果反馈更直接，
-          出题规则也更稳定，适合做日常心算热身和刷题。
-        </p>
-        <div class="hero-tags">
-          <span class="hero-tag">加减乘除</span>
-          <span class="hero-tag">精确位数</span>
-          <span class="hero-tag">即时判定</span>
-          <span class="hero-tag">轻量动效</span>
+        <p>改成了真正的三段流程：先配置考试，再进入答题，再看总结。现在更像一套可重复练习的小型考试系统，而不是单页题目列表。</p>
+      </div>
+      <div class="hero-metrics">
+        <div class="metric">
+          <span class="metric-label">当前页面</span>
+          <div class="metric-value">{{ currentViewLabel }}</div>
+        </div>
+        <div class="metric">
+          <span class="metric-label">历史记录</span>
+          <div class="metric-value">{{ history.length }} 条</div>
         </div>
       </div>
-      <div class="panel hero-side">
-        <div class="metric-card">
-          <span class="metric-label">当前模式</span>
-          <div class="metric-value">{{ activeMode.name }}</div>
-        </div>
-        <div class="metric-card">
-          <span class="metric-label">本轮题量</span>
-          <div class="metric-value">{{ topicCount }} 题</div>
-        </div>
-        <div class="metric-card">
-          <span class="metric-label">题型说明</span>
-          <div class="section-desc" style="margin: 10px 0 0;">
-            {{ activeMode.description }}
-          </div>
-        </div>
-      </div>
+    </header>
+
+    <section class="stepper">
+      <article class="step" :class="{ active: currentView === 'setup' }">
+        <span class="step-index">01</span>
+        <h2>配置</h2>
+        <p>在首页卡片里选考试模式、题量、计时方式和显示规则。</p>
+      </article>
+      <article class="step" :class="{ active: currentView === 'exam' }">
+        <span class="step-index">02</span>
+        <h2>答题</h2>
+        <p>顺序计时和倒计时都支持，倒计时结束后会直接进入总结页。</p>
+      </article>
+      <article class="step" :class="{ active: currentView === 'summary' }">
+        <span class="step-index">03</span>
+        <h2>总结</h2>
+        <p>统计成绩、查看错题、保留最近历史记录，方便复盘。</p>
+      </article>
     </section>
 
-    <section class="workspace">
-      <aside class="panel sidebar">
-        <h2 class="section-title">练习模式</h2>
-        <p class="section-desc">选择模式后开始新一轮练习。随机题型会按合理范围生成，不再出现位数漂移或题意不稳定的问题。</p>
-
-        <div class="mode-grid">
-          <button
-            v-for="mode in practiceModes"
-            :key="mode.id"
-            class="mode-card"
-            :class="{ active: mode.id === activeModeId }"
-            @click="selectMode(mode.id)"
-          >
-            <div class="mode-header">
-              <span class="mode-name">{{ mode.name }}</span>
-              <span class="mode-badge">{{ mode.badge }}</span>
+    <main class="panel page">
+      <section v-if="currentView === 'setup'" class="setup-grid">
+        <article class="setup-card wide">
+          <div class="card-header">
+            <div>
+              <h3>考试模式</h3>
+              <p>把原来零散按钮整理成卡片式模式选择。每个模式都保留稳定的位数规则和题目生成逻辑。</p>
             </div>
-            <p class="mode-desc">{{ mode.description }}</p>
-          </button>
-        </div>
+            <span class="pill">{{ selectedMode.category }}</span>
+          </div>
+          <div class="mode-grid">
+            <button
+              v-for="mode in practiceModes"
+              :key="mode.id"
+              class="choice-card"
+              :class="{ active: mode.id === setup.modeId }"
+              @click="setup.modeId = mode.id"
+            >
+              <strong>{{ mode.name }}</strong>
+              <span>{{ mode.description }}</span>
+            </button>
+          </div>
+        </article>
 
-        <div class="controls">
+        <article class="setup-card">
+          <div class="card-header">
+            <div>
+              <h3>题目数量</h3>
+              <p>控制本轮考试总题量。倒计时模式下也会一并影响节奏和完成率。</p>
+            </div>
+            <span class="pill">Count</span>
+          </div>
           <div class="field">
-            <label for="topic-range">题目数量</label>
-            <input id="topic-range" v-model.number="topicCount" type="range" min="5" max="25" step="1">
+            <label for="topic-range">题量</label>
+            <input id="topic-range" v-model.number="setup.topicCount" type="range" min="5" max="30" step="1">
             <div class="field-value">
-              <span>当前</span>
-              <strong>{{ topicCount }} 题</strong>
+              <span>当前设置</span>
+              <strong>{{ setup.topicCount }} 题</strong>
+            </div>
+          </div>
+        </article>
+
+        <article class="setup-card">
+          <div class="card-header">
+            <div>
+              <h3>计时模式</h3>
+              <p>顺序计时会一直往上计，答完或手动结束后进入总结。倒计时结束会自动收卷。</p>
+            </div>
+            <span class="pill">Timer</span>
+          </div>
+          <div class="mini-choice-row">
+            <button class="mini-choice" :class="{ active: setup.timingMode === 'countup' }" @click="setup.timingMode = 'countup'">
+              <strong>顺序计时</strong>
+              <span>做完自动出总结，也可以提前结束。</span>
+            </button>
+            <button class="mini-choice" :class="{ active: setup.timingMode === 'countdown' }" @click="setup.timingMode = 'countdown'">
+              <strong>倒计时模式</strong>
+              <span>时间归零立刻交卷，适合模拟压时训练。</span>
+            </button>
+          </div>
+          <div v-if="setup.timingMode === 'countdown'" class="field">
+            <label for="countdown-range">倒计时时长</label>
+            <input id="countdown-range" v-model.number="setup.countdownMinutes" type="range" min="1" max="15" step="1">
+            <div class="field-value">
+              <span>当前设置</span>
+              <strong>{{ setup.countdownMinutes }} 分钟</strong>
+            </div>
+          </div>
+        </article>
+
+        <article class="setup-card wide">
+          <div class="card-header">
+            <div>
+              <h3>杂项设置</h3>
+              <p>答案显示规则和输入反馈统一放这里。你提到的“做完再显示还是每题输入后显示”已经做成显式选项。</p>
+            </div>
+            <span class="pill">Misc</span>
+          </div>
+          <div class="mini-choice-row">
+            <button class="mini-choice" :class="{ active: setup.revealPolicy === 'summary' }" @click="setup.revealPolicy = 'summary'">
+              <strong>做完整场再显示答案</strong>
+              <span>考试页只给对错状态，详细错题放到总结页统一看。</span>
+            </button>
+            <button class="mini-choice" :class="{ active: setup.revealPolicy === 'instant' }" @click="setup.revealPolicy = 'instant'">
+              <strong>每题输入后即时反馈</strong>
+              <span>适合练手速和即时校正，答题时就会看到正确答案。</span>
+            </button>
+          </div>
+
+          <div class="setup-summary">
+            <div class="summary-chip">
+              <span class="label">模式</span>
+              <span class="value">{{ selectedMode.name }}</span>
+            </div>
+            <div class="summary-chip">
+              <span class="label">题量</span>
+              <span class="value">{{ setup.topicCount }} 题</span>
+            </div>
+            <div class="summary-chip">
+              <span class="label">计时</span>
+              <span class="value">{{ setup.timingMode === 'countup' ? '顺序计时' : '倒计时' }}</span>
+            </div>
+            <div class="summary-chip">
+              <span class="label">答案反馈</span>
+              <span class="value">{{ setup.revealPolicy === 'instant' ? '即时显示' : '总结页显示' }}</span>
             </div>
           </div>
 
           <div class="action-row">
-            <button class="action-button primary" @click="startPractice()">开始新一轮</button>
-            <button class="action-button ghost" @click="toggleRevealAnswers()">
-              {{ revealAnswers ? '隐藏答案' : '显示答案' }}
-            </button>
+            <button class="button primary" @click="startExam()">开始考试</button>
+            <button class="button ghost" @click="applyRecommendedPreset()">应用推荐配置</button>
           </div>
-        </div>
+        </article>
+      </section>
 
-        <p class="footer-note">
-          回车会自动跳到下一题。全部作答完成后计时自动停止，同时显示总体正确率。
-        </p>
-      </aside>
+      <section v-else-if="currentView === 'exam'" class="exam-shell">
+        <aside class="exam-sidebar dark">
+          <div class="sidebar-block">
+            <span class="tiny-label">考试模式</span>
+            <div class="sidebar-value">{{ exam.modeName }}</div>
+            <p class="sidebar-note">{{ exam.modeDescription }}</p>
+          </div>
 
-      <main class="panel practice-panel">
-        <div class="practice-header">
-          <div class="practice-title">
-            <h2>{{ activeMode.name }}</h2>
-            <p>{{ activeMode.description }}</p>
+          <div class="sidebar-block">
+            <span class="tiny-label">{{ exam.timingMode === 'countup' ? '已用时间' : '剩余时间' }}</span>
+            <div class="sidebar-value">{{ timerLabel }}</div>
+            <div class="sidebar-chip-row">
+              <span class="sidebar-chip">{{ exam.timingMode === 'countup' ? '顺序计时' : '倒计时' }}</span>
+              <span class="sidebar-chip">{{ exam.topicCount }} 题</span>
+            </div>
           </div>
-        </div>
 
-        <div class="status-bar">
-          <div class="status-card">
-            <span class="status-label">用时</span>
-            <span class="status-value">{{ formattedTime }}</span>
+          <div class="sidebar-block">
+            <span class="tiny-label">完成进度</span>
+            <div class="sidebar-value">{{ answeredCount }}/{{ exam.items.length }}</div>
+            <p class="sidebar-note">答对 {{ correctCount }} 题，未作答 {{ unansweredCount }} 题。</p>
           </div>
-          <div class="status-card">
-            <span class="status-label">进度</span>
-            <span class="status-value">{{ answeredCount }}/{{ items.length || topicCount }}</span>
-          </div>
-          <div class="status-card">
-            <span class="status-label">正确率</span>
-            <span class="status-value">{{ accuracyLabel }}</span>
-          </div>
-          <div class="status-card">
-            <span class="status-label">答对</span>
-            <span class="status-value">{{ correctCount }}</span>
-          </div>
-        </div>
 
-        <div class="progress-track">
-          <div class="progress-value" :style="{ width: progressPercent + '%' }"></div>
-        </div>
+          <div class="action-row" style="margin-top: 0;">
+            <button class="button primary" @click="finishExam('manual')">快速结束</button>
+            <button class="button ghost" @click="goToSetup()">返回配置页</button>
+          </div>
+        </aside>
 
-        <section v-if="items.length === 0" class="empty-state">
-          <div>
-            <h3>先选一个模式开始</h3>
-            <p>
-              左侧点击题型卡片，然后开始练习。新的版本会尽量保证题目位数、答案位数和训练目标一致，
-              不会再随机出一些不太像样的边界题。
-            </p>
+        <section class="exam-board">
+          <div class="exam-board-header">
+            <div>
+              <h2>{{ exam.modeName }}</h2>
+              <p>{{ exam.modeDescription }}</p>
+            </div>
+          </div>
+
+          <div class="progress-track">
+            <div class="progress-value" :style="{ width: examProgress + '%' }"></div>
+          </div>
+
+          <div class="question-list">
+            <article v-for="(item, index) in exam.items" :key="item.id" class="question-card">
+              <span class="formula">{{ item.first }}</span>
+              <span class="formula muted">{{ item.sign }}</span>
+              <span class="formula">{{ item.second }}</span>
+              <span class="formula muted equal">=</span>
+              <input
+                class="answer-input"
+                type="text"
+                inputmode="numeric"
+                v-model.trim="item.clientAnswer"
+                :ref="setAnswerRef(index)"
+                @input="handleAnswerInput(item)"
+                @keyup.enter="focusNext(index)"
+              >
+              <span class="inline-answer" :class="{ hidden: !shouldShowInlineAnswer(item) }">{{ item.answer }}</span>
+              <span class="judge" :class="judgeClass(item)">{{ judgeSymbol(item) }}</span>
+            </article>
           </div>
         </section>
+      </section>
 
-        <section v-else class="exercise-list">
-          <div v-for="(item, index) in items" :key="item.id" class="exercise-row">
-            <span class="formula">{{ item.first }}</span>
-            <span class="formula sign">{{ item.sign }}</span>
-            <span class="formula">{{ item.second }}</span>
-            <span class="formula equal">=</span>
-            <input
-              class="answer-input"
-              type="number"
-              inputmode="numeric"
-              v-model.trim="item.clientAnswer"
-              :ref="setAnswerRef(index)"
-              @keyup.enter="focusNext(index)"
-            >
-            <span class="truth" :class="{ hidden: !shouldShowAnswer(item) }">{{ item.answer }}</span>
-            <span class="judge" :class="judgeClass(item)">{{ judgeSymbol(item) }}</span>
-          </div>
-        </section>
-      </main>
-    </section>
+      <section v-else class="summary-layout">
+        <div>
+          <h2>考试总结</h2>
+          <p>{{ summaryHeadline }}</p>
+        </div>
+
+        <div class="summary-stats">
+          <article class="stat-card">
+            <span class="metric-label">总题数</span>
+            <strong>{{ summary.topicCount }}</strong>
+          </article>
+          <article class="stat-card">
+            <span class="metric-label">答对</span>
+            <strong>{{ summary.correctCount }}</strong>
+          </article>
+          <article class="stat-card">
+            <span class="metric-label">答错</span>
+            <strong>{{ summary.wrongCount }}</strong>
+          </article>
+          <article class="stat-card">
+            <span class="metric-label">未作答</span>
+            <strong>{{ summary.unansweredCount }}</strong>
+          </article>
+          <article class="stat-card">
+            <span class="metric-label">正确率</span>
+            <strong>{{ summary.accuracy }}%</strong>
+          </article>
+        </div>
+
+        <div class="summary-grid">
+          <section class="subpanel">
+            <h3>错题回看</h3>
+            <p>总结页里集中看错题和未作答题，比考试过程中打断节奏更适合复盘。</p>
+            <div v-if="summary.wrongItems.length === 0" class="empty-box">
+              本轮没有错题。可以直接再来一轮，或者切换成更高难度模式。
+            </div>
+            <div v-else class="wrong-list">
+              <article v-for="item in summary.wrongItems" :key="item.id" class="wrong-item">
+                <div class="wrong-formula">{{ item.first }} {{ item.sign }} {{ item.second }} = {{ item.answer }}</div>
+                <div class="wrong-meta">
+                  <span>你的答案：{{ item.clientAnswer === '' ? '未作答' : item.clientAnswer }}</span>
+                  <span>状态：{{ item.clientAnswer === '' ? '未填写' : '错误' }}</span>
+                </div>
+              </article>
+            </div>
+          </section>
+
+          <section class="subpanel">
+            <h3>成绩记录</h3>
+            <p>最近记录会保存在浏览器本地，方便你回头看每次模式、用时和正确率。</p>
+            <div v-if="history.length === 0" class="empty-box">
+              目前还没有历史记录。完成一次考试后会自动写入本地。
+            </div>
+            <div v-else class="history-list">
+              <article v-for="item in history" :key="item.id" class="history-item">
+                <div class="wrong-formula">{{ item.modeName }}</div>
+                <div class="history-meta">
+                  <span>{{ item.dateLabel }}</span>
+                  <span>{{ item.topicCount }} 题</span>
+                  <span>{{ item.timingLabel }}</span>
+                  <span>正确率 {{ item.accuracy }}%</span>
+                  <span>用时 {{ item.durationLabel }}</span>
+                </div>
+              </article>
+            </div>
+          </section>
+        </div>
+
+        <div class="action-row">
+          <button class="button primary" @click="restartWithSameSetup()">再来一轮</button>
+          <button class="button secondary" @click="goToSetup()">返回配置页</button>
+        </div>
+      </section>
+    </main>
   </div>
 
   <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
   <script>
+    const HISTORY_KEY = "gwy-calc-practic-history-v2";
+
     const practiceModes = [
       {
         id: "add-2",
+        category: "加法",
         name: "2位数加法",
-        badge: "ADD",
         description: "固定生成 10-99 的两位数相加，适合热身和找节奏。",
         build(app) {
           return app.createAdditionItem(2, 2);
@@ -769,8 +1112,8 @@
       },
       {
         id: "add-3",
+        category: "加法",
         name: "3位数加法",
-        badge: "ADD",
         description: "固定生成 100-999 的三位数相加，强化列式心算。",
         build(app) {
           return app.createAdditionItem(3, 3);
@@ -778,8 +1121,8 @@
       },
       {
         id: "add-random",
+        category: "加法",
         name: "随机位数加法",
-        badge: "MIX",
         description: "随机组合 2-4 位数，训练对不同位宽的适应能力。",
         build(app) {
           return app.createAdditionItem(app.randomInt(2, 4), app.randomInt(2, 4));
@@ -787,8 +1130,8 @@
       },
       {
         id: "sub-2",
+        category: "减法",
         name: "2位数减法",
-        badge: "SUB",
         description: "固定两位数减法，结果始终非负，减少无效负数题。",
         build(app) {
           return app.createSubtractionItem(2, 2);
@@ -796,8 +1139,8 @@
       },
       {
         id: "sub-3",
+        category: "减法",
         name: "3位数减法",
-        badge: "SUB",
         description: "固定三位数减法，控制难度同时保留借位空间。",
         build(app) {
           return app.createSubtractionItem(3, app.randomInt(2, 3));
@@ -805,8 +1148,8 @@
       },
       {
         id: "sub-random",
+        category: "减法",
         name: "随机位数减法",
-        badge: "MIX",
         description: "随机组合 2-4 位数减法，并保证被减数不小于减数。",
         build(app) {
           return app.createSubtractionItem(app.randomInt(2, 4), app.randomInt(2, 4));
@@ -814,8 +1157,8 @@
       },
       {
         id: "mul-2x2",
+        category: "乘法",
         name: "2位数乘法(求前3位)",
-        badge: "MUL",
         description: "两位数乘两位数，只求积的前 3 位，适合速估训练。",
         build(app) {
           return app.createMultiplicationPrefixItem(2, 2, 3);
@@ -823,8 +1166,8 @@
       },
       {
         id: "mul-3x3",
+        category: "乘法",
         name: "3位数乘法(求前3位)",
-        badge: "MUL",
         description: "三位数乘三位数，只求积的前 3 位，提升数量级判断。",
         build(app) {
           return app.createMultiplicationPrefixItem(3, 3, 3);
@@ -832,36 +1175,36 @@
       },
       {
         id: "mul-3x2",
+        category: "乘法",
         name: "3位乘2位(求前3位)",
-        badge: "MUL",
-        description: "三位数乘两位数，保留原题型，但稳定控制位数边界。",
+        description: "三位数乘两位数，稳定控制位数边界。",
         build(app) {
           return app.createMultiplicationPrefixItem(3, 2, 3);
         }
       },
       {
         id: "div-1",
+        category: "除法",
         name: "除法(求首位)",
-        badge: "DIV",
-        description: "先构造足够长的商，再生成除法题，确保首位训练目标明确。",
+        description: "先构造商再回推题目，确保首位训练目标明确。",
         build(app) {
           return app.createDivisionPrefixItem(8, [2, 3, 4], 1);
         }
       },
       {
         id: "div-2",
+        category: "除法",
         name: "除法(求首两位)",
-        badge: "DIV",
-        description: "商至少有两位，避免随机除法出现长度不足的问题。",
+        description: "商至少有两位，避免原始随机除法长度不足的问题。",
         build(app) {
           return app.createDivisionPrefixItem(8, [2, 3, 4], 2);
         }
       },
       {
         id: "div-3",
+        category: "除法",
         name: "除法(求前3位)",
-        badge: "DIV",
-        description: "商至少有三位，通过构造法确保题意稳定，适合速估前几位。",
+        description: "商至少有三位，通过构造法稳定生成题目。",
         build(app) {
           return app.createDivisionPrefixItem(8, [2, 3, 4], 3);
         }
@@ -871,106 +1214,227 @@
     const app = {
       data() {
         return {
-          items: [],
-          secondsElapsed: 0,
+          currentView: "setup",
+          setup: {
+            modeId: "add-2",
+            topicCount: 10,
+            timingMode: "countup",
+            countdownMinutes: 3,
+            revealPolicy: "summary"
+          },
+          exam: null,
+          summary: null,
+          history: [],
           timerId: null,
-          topicCount: 10,
-          revealAnswers: false,
-          activeModeId: "add-2",
           answerRefs: []
         };
       },
       computed: {
-        activeMode() {
-          return this.practiceModes.find((mode) => mode.id === this.activeModeId) || this.practiceModes[0];
-        },
-        answeredCount() {
-          return this.items.filter((item) => this.isAnswered(item)).length;
-        },
-        correctCount() {
-          return this.items.filter((item) => this.isCorrect(item)).length;
-        },
-        accuracy() {
-          return this.answeredCount === 0 ? 0 : Math.round((this.correctCount / this.answeredCount) * 100);
-        },
-        accuracyLabel() {
-          return this.answeredCount === 0 ? "--" : this.accuracy + "%";
-        },
-        progressPercent() {
-          return this.items.length === 0 ? 0 : Math.round((this.answeredCount / this.items.length) * 100);
-        },
-        formattedTime() {
-          const minutes = String(Math.floor(this.secondsElapsed / 60)).padStart(2, "0");
-          const seconds = String(this.secondsElapsed % 60).padStart(2, "0");
-          return minutes + ":" + seconds;
+        selectedMode() {
+          return this.practiceModes.find((mode) => mode.id === this.setup.modeId) || this.practiceModes[0];
         },
         practiceModes() {
           return practiceModes;
+        },
+        currentViewLabel() {
+          if (this.currentView === "setup") return "配置页";
+          if (this.currentView === "exam") return "考试页";
+          return "总结页";
+        },
+        answeredCount() {
+          return this.exam ? this.exam.items.filter((item) => this.isAnswered(item)).length : 0;
+        },
+        correctCount() {
+          return this.exam ? this.exam.items.filter((item) => this.isCorrect(item)).length : 0;
+        },
+        unansweredCount() {
+          return this.exam ? this.exam.items.length - this.answeredCount : 0;
+        },
+        examProgress() {
+          return this.exam && this.exam.items.length > 0 ? Math.round((this.answeredCount / this.exam.items.length) * 100) : 0;
+        },
+        timerLabel() {
+          if (!this.exam) return "00:00";
+          const seconds = this.exam.timingMode === "countdown" ? this.exam.remainingSeconds : this.exam.elapsedSeconds;
+          return this.formatDuration(seconds);
+        },
+        summaryHeadline() {
+          if (!this.summary) return "";
+          if (this.summary.finishReason === "timeup") {
+            return "倒计时结束后已自动交卷，错题和成绩记录已经整理在下面。";
+          }
+          if (this.summary.finishReason === "manual") {
+            return "你提前结束了本轮考试。未作答题目也已计入总结，方便快速复盘。";
+          }
+          return "本轮考试已正常完成，下面可以直接回看错题和最近成绩。";
         }
       },
       mounted() {
-        this.startTicker();
+        this.loadHistory();
         window.addEventListener("pointermove", this.handlePointerMove, { passive: true });
       },
       beforeUnmount() {
-        if (this.timerId) {
-          window.clearInterval(this.timerId);
-          this.timerId = null;
-        }
+        this.stopTimer();
         window.removeEventListener("pointermove", this.handlePointerMove);
       },
       methods: {
-        setAnswerRef(index) {
-          return (el) => {
-            if (el) {
-              this.answerRefs[index] = el;
-            }
-          };
-        },
         handlePointerMove(event) {
           document.documentElement.style.setProperty("--glow-x", event.clientX + "px");
           document.documentElement.style.setProperty("--glow-y", event.clientY + "px");
         },
-        startTicker() {
-          if (this.timerId) {
-            return;
-          }
-          this.timerId = window.setInterval(() => {
-            if (this.items.length > 0 && this.answeredCount < this.items.length) {
-              this.secondsElapsed += 1;
+        setAnswerRef(index) {
+          return (element) => {
+            if (element) {
+              this.answerRefs[index] = element;
             }
-          }, 1000);
+          };
         },
-        resetTimer() {
-          this.secondsElapsed = 0;
+        applyRecommendedPreset() {
+          this.setup.modeId = "mul-3x2";
+          this.setup.topicCount = 12;
+          this.setup.timingMode = "countdown";
+          this.setup.countdownMinutes = 4;
+          this.setup.revealPolicy = "summary";
         },
-        selectMode(modeId) {
-          this.activeModeId = modeId;
-          this.startPractice();
+        goToSetup() {
+          this.stopTimer();
+          this.exam = null;
+          this.currentView = "setup";
         },
-        startPractice() {
-          this.resetTimer();
-          this.revealAnswers = false;
-          this.answerRefs = [];
-          this.items = Array.from({ length: this.topicCount }, (_, index) => ({
-            id: this.activeMode.id + "-" + index + "-" + Date.now(),
+        restartWithSameSetup() {
+          if (this.summary) {
+            this.setup.modeId = this.summary.modeId;
+            this.setup.topicCount = this.summary.topicCount;
+            this.setup.timingMode = this.summary.timingMode;
+            this.setup.countdownMinutes = this.summary.countdownMinutes;
+            this.setup.revealPolicy = this.summary.revealPolicy;
+          }
+          this.startExam();
+        },
+        startExam() {
+          const mode = this.selectedMode;
+          const items = Array.from({ length: this.setup.topicCount }, (_, index) => ({
+            id: mode.id + "-" + index + "-" + Date.now() + "-" + Math.random().toString(16).slice(2, 8),
             clientAnswer: "",
-            ...this.activeMode.build(this)
+            ...mode.build(this)
           }));
+
+          this.stopTimer();
+          this.answerRefs = [];
+          this.summary = null;
+          this.exam = {
+            modeId: mode.id,
+            modeName: mode.name,
+            modeDescription: mode.description,
+            topicCount: this.setup.topicCount,
+            timingMode: this.setup.timingMode,
+            countdownMinutes: this.setup.countdownMinutes,
+            revealPolicy: this.setup.revealPolicy,
+            startedAt: new Date().toISOString(),
+            elapsedSeconds: 0,
+            remainingSeconds: this.setup.timingMode === "countdown" ? this.setup.countdownMinutes * 60 : 0,
+            items
+          };
+          this.currentView = "exam";
+          this.startTimer();
           this.$nextTick(() => {
             if (this.answerRefs[0]) {
               this.answerRefs[0].focus();
             }
           });
         },
-        toggleRevealAnswers() {
-          this.revealAnswers = !this.revealAnswers;
+        startTimer() {
+          if (this.timerId || !this.exam) {
+            return;
+          }
+          this.timerId = window.setInterval(() => {
+            if (!this.exam) {
+              return;
+            }
+
+            if (this.exam.timingMode === "countdown") {
+              if (this.exam.remainingSeconds <= 1) {
+                this.exam.remainingSeconds = 0;
+                this.finishExam("timeup");
+                return;
+              }
+              this.exam.remainingSeconds -= 1;
+              this.exam.elapsedSeconds += 1;
+              return;
+            }
+
+            this.exam.elapsedSeconds += 1;
+          }, 1000);
+        },
+        stopTimer() {
+          if (this.timerId) {
+            window.clearInterval(this.timerId);
+            this.timerId = null;
+          }
         },
         focusNext(index) {
           const next = this.answerRefs[index + 1];
           if (next) {
             next.focus();
+            return;
           }
+          this.tryFinishOnCompletion();
+        },
+        handleAnswerInput() {
+          this.tryFinishOnCompletion();
+        },
+        tryFinishOnCompletion() {
+          if (this.exam && this.exam.items.length > 0 && this.answeredCount >= this.exam.items.length) {
+            this.finishExam("completed");
+          }
+        },
+        finishExam(reason) {
+          if (!this.exam) {
+            return;
+          }
+
+          const snapshot = this.exam.items.map((item) => ({
+            id: item.id,
+            first: item.first,
+            sign: item.sign,
+            second: item.second,
+            answer: item.answer,
+            clientAnswer: item.clientAnswer
+          }));
+          const correctCount = snapshot.filter((item) => this.isCorrect(item)).length;
+          const unansweredCount = snapshot.filter((item) => !this.isAnswered(item)).length;
+          const wrongCount = snapshot.filter((item) => this.isAnswered(item) && !this.isCorrect(item)).length;
+          const wrongItems = snapshot.filter((item) => !this.isCorrect(item));
+          const accuracy = snapshot.length === 0 ? 0 : Math.round((correctCount / snapshot.length) * 100);
+          const durationSeconds = this.exam.elapsedSeconds;
+
+          this.summary = {
+            id: "summary-" + Date.now(),
+            modeId: this.exam.modeId,
+            modeName: this.exam.modeName,
+            topicCount: this.exam.topicCount,
+            timingMode: this.exam.timingMode,
+            timingLabel: this.exam.timingMode === "countup" ? "顺序计时" : "倒计时",
+            countdownMinutes: this.exam.countdownMinutes,
+            revealPolicy: this.exam.revealPolicy,
+            finishReason: reason,
+            dateLabel: this.formatDate(new Date()),
+            durationSeconds,
+            durationLabel: this.formatDuration(durationSeconds),
+            correctCount,
+            wrongCount,
+            unansweredCount,
+            accuracy,
+            wrongItems
+          };
+
+          this.pushHistory(this.summary);
+          this.stopTimer();
+          this.currentView = "summary";
+          this.exam = null;
+        },
+        shouldShowInlineAnswer(item) {
+          return this.exam && this.exam.revealPolicy === "instant" && this.isAnswered(item);
         },
         isAnswered(item) {
           return item.clientAnswer !== "" && item.clientAnswer !== null && item.clientAnswer !== undefined;
@@ -980,9 +1444,6 @@
         },
         isCorrect(item) {
           return this.isAnswered(item) && this.normalizedAnswer(item) === String(item.answer);
-        },
-        shouldShowAnswer(item) {
-          return this.revealAnswers || (this.items.length > 0 && this.answeredCount >= this.items.length && !this.isCorrect(item));
         },
         judgeClass(item) {
           if (!this.isAnswered(item)) {
@@ -1012,34 +1473,18 @@
         createAdditionItem(firstDigits, secondDigits) {
           const first = this.randomNumberByDigits(firstDigits);
           const second = this.randomNumberByDigits(secondDigits);
-          return {
-            first,
-            sign: "+",
-            second,
-            answer: first + second
-          };
+          return { first, sign: "+", second, answer: first + second };
         },
         createSubtractionItem(firstDigits, secondDigits) {
           const first = this.randomNumberByDigits(firstDigits);
           const rawSecond = this.randomNumberByDigits(secondDigits);
           const second = Math.min(rawSecond, first);
-          return {
-            first,
-            sign: "-",
-            second,
-            answer: first - second
-          };
+          return { first, sign: "-", second, answer: first - second };
         },
         createMultiplicationPrefixItem(firstDigits, secondDigits, prefixDigits) {
           const first = this.randomNumberByDigits(firstDigits);
           const second = this.randomNumberByDigits(secondDigits);
-          const answer = String(first * second).slice(0, prefixDigits);
-          return {
-            first,
-            sign: "×",
-            second,
-            answer
-          };
+          return { first, sign: "×", second, answer: String(first * second).slice(0, prefixDigits) };
         },
         createDivisionPrefixItem(dividendDigits, divisorDigitsPool, prefixDigits) {
           for (let attempt = 0; attempt < 80; attempt += 1) {
@@ -1070,6 +1515,49 @@
             second: 125,
             answer: "800".slice(0, prefixDigits)
           };
+        },
+        formatDuration(totalSeconds) {
+          const safe = Math.max(0, totalSeconds);
+          const minutes = String(Math.floor(safe / 60)).padStart(2, "0");
+          const seconds = String(safe % 60).padStart(2, "0");
+          return minutes + ":" + seconds;
+        },
+        formatDate(date) {
+          const year = date.getFullYear();
+          const month = String(date.getMonth() + 1).padStart(2, "0");
+          const day = String(date.getDate()).padStart(2, "0");
+          const hours = String(date.getHours()).padStart(2, "0");
+          const minutes = String(date.getMinutes()).padStart(2, "0");
+          return year + "-" + month + "-" + day + " " + hours + ":" + minutes;
+        },
+        loadHistory() {
+          try {
+            const raw = window.localStorage.getItem(HISTORY_KEY);
+            this.history = raw ? JSON.parse(raw) : [];
+          } catch (error) {
+            this.history = [];
+          }
+        },
+        pushHistory(summary) {
+          const next = [
+            {
+              id: summary.id,
+              dateLabel: summary.dateLabel,
+              modeName: summary.modeName,
+              topicCount: summary.topicCount,
+              timingLabel: summary.timingLabel,
+              accuracy: summary.accuracy,
+              durationLabel: summary.durationLabel
+            },
+            ...this.history
+          ].slice(0, 12);
+
+          this.history = next;
+          try {
+            window.localStorage.setItem(HISTORY_KEY, JSON.stringify(next));
+          } catch (error) {
+            // Ignore storage failures in local preview mode.
+          }
         }
       }
     };
